@@ -36,8 +36,7 @@ public class Knife : MonoBehaviour
       isMoving = false;
       isStuck = true;
 
-      transform.SetParent(target.Find("KnifeHolder"));
-
+      transform.SetParent(target);
       transform.position = new Vector3(transform.position.x, transform.position.y, 0);
     }
 }
