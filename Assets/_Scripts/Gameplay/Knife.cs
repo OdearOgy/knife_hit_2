@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Knife : MonoBehaviour
 {
-
     [SerializeField] private float speed = 12f;
     private bool isMoving = false;
     private bool isStuck = false;
@@ -17,7 +16,6 @@ public class Knife : MonoBehaviour
         if (!isMoving || isStuck) {
           return;
         }
-
 
         transform.position += Vector3.up * speed * Time.deltaTime;
     }
@@ -36,7 +34,7 @@ public class Knife : MonoBehaviour
       isMoving = false;
       isStuck = true;
 
-      transform.SetParent(target);
+      transform.SetParent(target.Find("KnifeHolder"));
       transform.position = new Vector3(transform.position.x, transform.position.y, 0);
     }
 }

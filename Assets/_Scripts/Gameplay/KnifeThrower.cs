@@ -25,6 +25,10 @@ public class KnifeThrower : MonoBehaviour
     }
 
     void ThrowKnife() {
+      if (GameManager.Instance.State != GameState.Playing) {
+        return;
+      }
+
       Knife knifeObject = Instantiate(knife, spawnPoint.position, Quaternion.identity);
       knifeObject.Launch();
     }
