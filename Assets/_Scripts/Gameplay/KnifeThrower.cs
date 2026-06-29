@@ -5,16 +5,11 @@ public class KnifeThrower : MonoBehaviour
     [SerializeField] private Knife knife;
     [SerializeField] private Transform spawnPoint;
 
-    private GameInputActions input;
-
-    private void Awake()
-    {
-        input = new GameInputActions();
-    }
-
     private void OnEnable()
     {
-      InputManager.Instance.OnTap += ThrowKnife;
+      if (InputManager.Instance != null) {
+        InputManager.Instance.OnTap += ThrowKnife;
+      }
     }
 
     private void OnDisable()
