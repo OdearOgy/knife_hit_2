@@ -25,6 +25,10 @@ public class GameController : MonoBehaviour {
       }
   }
 
+  public void OnSpawnKnife() {
+    SpawnKnife();
+  }
+
   void Start() {
     SpawnKnife();
   }
@@ -33,6 +37,7 @@ public class GameController : MonoBehaviour {
     Vector3 initialSpawnPoint = spawnPoint.position - Vector3.up * spawnOffset;
 
     currentKnife = Instantiate(knifePrefab, initialSpawnPoint, Quaternion.identity);
+    currentKnife.SetController(this);
     currentKnife.Prepare(spawnPoint.position, slideInSpeed);
   }
 

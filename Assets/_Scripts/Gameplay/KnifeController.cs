@@ -10,6 +10,7 @@ public enum KnifeState {
 
 public class Knife : MonoBehaviour
 {
+
     public KnifeState State {get; private set;} = KnifeState.Unset;
 
     [SerializeField] private float speed = 12f;
@@ -17,6 +18,8 @@ public class Knife : MonoBehaviour
     private Vector3 slideTarget;
     private float slideSpeed;
 
+    private GameController controller;
+    public void SetController(GameController c) => controller = c;
 
 
     void Update() {
@@ -63,9 +66,12 @@ public class Knife : MonoBehaviour
     }
 
     private void Stick(Transform target) {
+
       State = KnifeState.Stuck;
 
       transform.SetParent(target.Find("KnifeHolder"));
       transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+
+      controller?.OnSpawnKnife();
     }
 }
