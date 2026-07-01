@@ -269,6 +269,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3af6e42319a9845f69ebabf9f696d981, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameController
+  slideInSpeed: 25
+  spawnOffset: -3.5
   knifePrefab: {fileID: 1729099780}
   spawnPoint: {fileID: 125606151}
 --- !u!1 &650436253
@@ -652,7 +654,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4238237372568840687, guid: 79e95462050bd4d97b09220c280ca18d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.5
+      value: -5.31
       objectReference: {fileID: 0}
     - target: {fileID: 4238237372568840687, guid: 79e95462050bd4d97b09220c280ca18d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -688,7 +690,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7621742913313600164, guid: 79e95462050bd4d97b09220c280ca18d, type: 3}
       propertyPath: speed
-      value: 25
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 9100776786156393753, guid: 79e95462050bd4d97b09220c280ca18d, type: 3}
       propertyPath: m_Name

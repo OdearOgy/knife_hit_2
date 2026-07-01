@@ -4,10 +4,13 @@ using UnityEngine;
 
 
 public class GameController : MonoBehaviour {
+  [SerializeField] private float slideInSpeed = 25f;
+  [SerializeField] private float spawnOffset = 2.5f;
+
 
   [SerializeField] private Knife knifePrefab;
   [SerializeField] private Transform spawnPoint;
-
+  private Knife currentKnife;
 
   private void OnEnable() {
     if (InputManager.Instance != null) {
@@ -22,12 +25,27 @@ public class GameController : MonoBehaviour {
       }
   }
 
+  void Start() {
+    SpawnKnife();
+  }
+
+  void SpawnKnife() {
+    Vector3 initialSpawnPoint = spawnPoint.position - Vector3.up * spawnOffset;
+
+    currentKnife = Instantiate(knifePrefab, initialSpawnPoint, Quaternion.identity);
+    currentKnife.Prepare(spawnPoint.position, slideInSpeed);
+  }
+
   void ThrowKnife() {
     if (GameManager.Instance.State != GameState.Playing) {
       return;
     }
 
-    Knife knifeObject = Instantiate(knifePrefab, spawnPoint.position, Quaternion.identity);
-    knifeObject.Launch();
+    if (currentKnife == null) {
+      return;
+    }
+
+    currentKnife.Throw();
+    currentKnife = null;
   }
 }
