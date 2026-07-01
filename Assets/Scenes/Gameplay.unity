@@ -144,7 +144,7 @@ Transform:
   m_GameObject: {fileID: 125606150}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.5, z: 0}
+  m_LocalPosition: {x: 0, y: -5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -266,11 +266,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 498080987}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2dfa9ded604b41ad809067f2d5b99d9, type: 3}
+  m_Script: {fileID: 11500000, guid: 3af6e42319a9845f69ebabf9f696d981, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::KnifeThrower
-  knife: {fileID: 1729099780}
-  spawnPoint: {fileID: 1438766009}
+  m_EditorClassIdentifier: Assembly-CSharp::GameController
+  knifePrefab: {fileID: 1729099780}
+  spawnPoint: {fileID: 125606151}
 --- !u!1 &650436253
 GameObject:
   m_ObjectHideFlags: 0
@@ -685,6 +685,10 @@ PrefabInstance:
     - target: {fileID: 4238237372568840687, guid: 79e95462050bd4d97b09220c280ca18d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7621742913313600164, guid: 79e95462050bd4d97b09220c280ca18d, type: 3}
+      propertyPath: speed
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 9100776786156393753, guid: 79e95462050bd4d97b09220c280ca18d, type: 3}
       propertyPath: m_Name
