@@ -7,10 +7,11 @@ public class GameController : MonoBehaviour {
   [SerializeField] private float slideInSpeed = 25f;
   [SerializeField] private float spawnOffset = 2.5f;
 
-
   [SerializeField] private Knife knifePrefab;
   [SerializeField] private Transform spawnPoint;
   private Knife currentKnife;
+
+  private int knifeCount;
 
   private void OnEnable() {
     if (InputManager.Instance != null) {
@@ -27,25 +28,27 @@ public class GameController : MonoBehaviour {
   }
 
   public void OnSpawnKnife() {
-    Debug.Log("[GameController] OnSpawnKnife() → spawning next knife");
     currentKnife = null;
+
+    if (knifeCount == 0) {
+      GameManager.Instance.SetState(GameState.Won);
+      return;
+    }
+
     SpawnKnife();
   }
 
   public void OnKnifeMissed() {
-    Debug.Log("[GameController] OnKnifeMissed() → game over, no new spawn");
     currentKnife = null;
   }
 
   void Start() {
-    Debug.Log("[GameController] Start()");
+    knifeCount = LevelManager.Instance?.CurrentLevel?.knifeCount ?? 8;
     SpawnKnife();
   }
 
   void SpawnKnife() {
     Vector3 initialSpawnPoint = spawnPoint.position - Vector3.up * spawnOffset;
-    Debug.Log($"[GameController] SpawnKnife() at {initialSpawnPoint} targeting {spawnPoint.position}");
-
     currentKnife = Instantiate(knifePrefab, initialSpawnPoint, Quaternion.identity);
     currentKnife.SetController(this);
     currentKnife.Prepare(spawnPoint.position, slideInSpeed);
@@ -53,16 +56,18 @@ public class GameController : MonoBehaviour {
 
   void ThrowKnife() {
     if (GameManager.Instance.State != GameState.Playing) {
-      Debug.Log("[GameController] ThrowKnife() ignored (GameState != Playing)");
       return;
     }
 
     if (currentKnife == null) {
-      Debug.Log("[GameController] ThrowKnife() ignored (currentKnife is null)");
       return;
     }
 
-    Debug.Log($"[GameController] ThrowKnife() → currentKnife.state={currentKnife.State}");
+    if (knifeCount <= 0) {
+      return;
+    }
+
+    knifeCount--;
     currentKnife.Throw();
   }
 }
