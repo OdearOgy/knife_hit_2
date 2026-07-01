@@ -30,6 +30,10 @@ public class GameController : MonoBehaviour {
     SpawnKnife();
   }
 
+  public void OnKnifeMissed() {
+    currentKnife = null;
+  }
+
   void Start() {
     SpawnKnife();
   }

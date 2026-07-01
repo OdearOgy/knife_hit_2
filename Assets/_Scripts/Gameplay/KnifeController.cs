@@ -5,6 +5,7 @@ public enum KnifeState {
   Prepared,
   Thrown,
   Stuck,
+  Falling
 }
 
 
@@ -37,6 +38,10 @@ public class Knife : MonoBehaviour
             transform.position += Vector3.up * speed * Time.deltaTime;
           break;
 
+          case KnifeState.Falling:
+            FallDown();
+          break;
+
         }
     }
 
@@ -45,9 +50,16 @@ public class Knife : MonoBehaviour
         return;
       }
 
+      if (other.CompareTag("Knife") && State == KnifeState.Thrown) {
+        State = KnifeState.Falling;
+        GameManager.Instance.SetState(GameState.Lost);
+        controller?.OnKnifeMissed();
+      }
+
       if (other.CompareTag("Target")) {
         Stick(other.transform);
       }
+
     }
 
     public void Prepare(Vector3 target, float speed) {
@@ -72,5 +84,10 @@ public class Knife : MonoBehaviour
       transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
       controller?.OnSpawnKnife();
+    }
+
+    private void FallDown() {
+      transform.position += Vector3.down * (slideSpeed / 10) * Time.deltaTime;
+      transform.Rotate(0, 0, 360 * Time.deltaTime);
     }
 }
