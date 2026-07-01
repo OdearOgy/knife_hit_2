@@ -27,6 +27,7 @@ public class GameController : MonoBehaviour {
   }
 
   public void OnSpawnKnife() {
+    currentKnife = null;
     SpawnKnife();
   }
 
@@ -55,9 +56,6 @@ public class GameController : MonoBehaviour {
       return;
     }
 
-    if (currentKnife.State == KnifeState.Prepared) {
-      currentKnife.Throw();
-      currentKnife = null;
-    }
+    currentKnife.Throw();
   }
 }

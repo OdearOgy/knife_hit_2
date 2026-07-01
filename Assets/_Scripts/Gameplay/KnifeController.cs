@@ -2,6 +2,7 @@ using UnityEngine;
 
 public enum KnifeState {
   Unset,
+  Queued,
   Prepared,
   Thrown,
   Stuck,
@@ -26,11 +27,18 @@ public class Knife : MonoBehaviour
     void Update() {
         switch (State) {
           case KnifeState.Unset:
+          case KnifeState.Queued:
             transform.position = Vector3.MoveTowards(transform.position, slideTarget, slideSpeed * Time.deltaTime);
 
             if (Vector3.Distance(transform.position, slideTarget) < 0.01f) {
-              State = KnifeState.Prepared;
               GetComponent<Collider2D>().enabled = true;
+
+              if (State == KnifeState.Queued) {
+                  State = KnifeState.Thrown;
+              } else {
+                  State = KnifeState.Prepared;
+              }
+
             }
           break;
 
@@ -49,15 +57,14 @@ public class Knife : MonoBehaviour
       if (State == KnifeState.Stuck) {
         return;
       }
-
-      if (other.CompareTag("Knife") && State == KnifeState.Thrown) {
-        State = KnifeState.Falling;
-        GameManager.Instance.SetState(GameState.Lost);
-        controller?.OnKnifeMissed();
-      }
-
-      if (other.CompareTag("Target")) {
-        Stick(other.transform);
+      if (State == KnifeState.Thrown) {
+        if (other.CompareTag("Knife")) {
+          State = KnifeState.Falling;
+          GameManager.Instance.SetState(GameState.Lost);
+          controller?.OnKnifeMissed();
+        } else if (other.CompareTag("Target")) {
+          Stick(other.transform);
+        }
       }
 
     }
@@ -69,11 +76,15 @@ public class Knife : MonoBehaviour
     }
 
     public void Throw() {
-      if (State == KnifeState.Stuck) {
+      if (State == KnifeState.Stuck || State == KnifeState.Falling) {
         return;
       }
 
-      State = KnifeState.Thrown;
+      if (State == KnifeState.Unset) {
+        State = KnifeState.Queued;
+      } else if (State == KnifeState.Prepared) {
+        State = KnifeState.Thrown;
+      }
     }
 
     private void Stick(Transform target) {
