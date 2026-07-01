@@ -67,10 +67,10 @@ public class Knife : MonoBehaviour
     private void Stick(Transform target) {
 
       State = KnifeState.Stuck;
-      controller?.OnSpawnKnife();
 
       transform.SetParent(target.Find("KnifeHolder"));
       transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
+      controller?.OnSpawnKnife();
     }
 }
