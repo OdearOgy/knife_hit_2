@@ -34,8 +34,10 @@ public class Knife : MonoBehaviour
               GetComponent<Collider2D>().enabled = true;
 
               if (State == KnifeState.Queued) {
+                  Debug.Log($"[Knife] {name}: Queued → Thrown (auto-throw at spawn)");
                   State = KnifeState.Thrown;
               } else {
+                  Debug.Log($"[Knife] {name}: Unset → Prepared (at spawn)");
                   State = KnifeState.Prepared;
               }
 
@@ -57,12 +59,15 @@ public class Knife : MonoBehaviour
       if (State == KnifeState.Stuck) {
         return;
       }
+      Debug.Log($"[Knife] {name}: OnTriggerEnter2D with {other.name} (tag={other.tag}) while state={State}");
       if (State == KnifeState.Thrown) {
         if (other.CompareTag("Knife")) {
+          Debug.Log($"[Knife] {name}: HIT ANOTHER KNIFE → Falling");
           State = KnifeState.Falling;
           GameManager.Instance.SetState(GameState.Lost);
           controller?.OnKnifeMissed();
         } else if (other.CompareTag("Target")) {
+          Debug.Log($"[Knife] {name}: HIT TARGET → Stick()");
           Stick(other.transform);
         }
       }
@@ -77,18 +82,23 @@ public class Knife : MonoBehaviour
 
     public void Throw() {
       if (State == KnifeState.Stuck || State == KnifeState.Falling) {
+        Debug.Log($"[Knife] {name}: Throw() ignored (state={State})");
         return;
       }
 
       if (State == KnifeState.Unset) {
+        Debug.Log($"[Knife] {name}: Throw() while Unset → Queued (buffered)");
         State = KnifeState.Queued;
       } else if (State == KnifeState.Prepared) {
+        Debug.Log($"[Knife] {name}: Throw() while Prepared → Thrown");
         State = KnifeState.Thrown;
+      } else {
+        Debug.Log($"[Knife] {name}: Throw() ignored (state={State})");
       }
     }
 
     private void Stick(Transform target) {
-
+      Debug.Log($"[Knife] {name}: Stick() called on Target={target.name}");
       State = KnifeState.Stuck;
 
       transform.SetParent(target.Find("KnifeHolder"));
