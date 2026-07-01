@@ -20,12 +20,12 @@ public class InputManager : MonoBehaviour
     }
 
     private void OnEnable() {
+      input.GameplayActions.Tap.performed += HandleTap;
       input.Enable();
-      input.Gameplay.Tap.performed += HandleTap;
     }
 
     private void OnDisable() {
-      input.Gameplay.Tap.performed -= HandleTap;
+      input.GameplayActions.Tap.performed -= HandleTap;
       input.Disable();
     }
 

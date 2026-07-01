@@ -89,13 +89,13 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
     ""name"": ""GameInputActions"",
     ""maps"": [
         {
-            ""name"": ""Gameplay"",
-            ""id"": ""305936d3-a64c-465a-8c0b-f9c95e36d2e2"",
+            ""name"": ""Gameplay Actions"",
+            ""id"": ""966f6827-0f77-4531-8684-6bb23eb20edf"",
             ""actions"": [
                 {
                     ""name"": ""Tap"",
                     ""type"": ""Button"",
-                    ""id"": ""e9a666f3-6419-4c81-b433-0b0ad474729d"",
+                    ""id"": ""7812d812-01af-41ec-9039-562f529a9b53"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -105,7 +105,7 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""57ad578a-4519-4624-9566-7a5f6ab86289"",
+                    ""id"": ""0c0ca78c-5b77-416e-96f7-27df9ddad82b"",
                     ""path"": ""<Pointer>/press"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -119,14 +119,14 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
     ],
     ""controlSchemes"": []
 }");
-        // Gameplay
-        m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
-        m_Gameplay_Tap = m_Gameplay.FindAction("Tap", throwIfNotFound: true);
+        // Gameplay Actions
+        m_GameplayActions = asset.FindActionMap("Gameplay Actions", throwIfNotFound: true);
+        m_GameplayActions_Tap = m_GameplayActions.FindAction("Tap", throwIfNotFound: true);
     }
 
     ~@GameInputActions()
     {
-        UnityEngine.Debug.Assert(!m_Gameplay.enabled, "This will cause a leak and performance issues, GameInputActions.Gameplay.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_GameplayActions.enabled, "This will cause a leak and performance issues, GameInputActions.GameplayActions.Disable() has not been called.");
     }
 
     /// <summary>
@@ -199,29 +199,29 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Gameplay
-    private readonly InputActionMap m_Gameplay;
-    private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
-    private readonly InputAction m_Gameplay_Tap;
+    // Gameplay Actions
+    private readonly InputActionMap m_GameplayActions;
+    private List<IGameplayActionsActions> m_GameplayActionsActionsCallbackInterfaces = new List<IGameplayActionsActions>();
+    private readonly InputAction m_GameplayActions_Tap;
     /// <summary>
-    /// Provides access to input actions defined in input action map "Gameplay".
+    /// Provides access to input actions defined in input action map "Gameplay Actions".
     /// </summary>
-    public struct GameplayActions
+    public struct GameplayActionsActions
     {
         private @GameInputActions m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public GameplayActions(@GameInputActions wrapper) { m_Wrapper = wrapper; }
+        public GameplayActionsActions(@GameInputActions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "Gameplay/Tap".
+        /// Provides access to the underlying input action "GameplayActions/Tap".
         /// </summary>
-        public InputAction @Tap => m_Wrapper.m_Gameplay_Tap;
+        public InputAction @Tap => m_Wrapper.m_GameplayActions_Tap;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
+        public InputActionMap Get() { return m_Wrapper.m_GameplayActions; }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
         public void Enable() { Get().Enable(); }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
@@ -229,9 +229,9 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
         public bool enabled => Get().enabled;
         /// <summary>
-        /// Implicitly converts an <see ref="GameplayActions" /> to an <see ref="InputActionMap" /> instance.
+        /// Implicitly converts an <see ref="GameplayActionsActions" /> to an <see ref="InputActionMap" /> instance.
         /// </summary>
-        public static implicit operator InputActionMap(GameplayActions set) { return set.Get(); }
+        public static implicit operator InputActionMap(GameplayActionsActions set) { return set.Get(); }
         /// <summary>
         /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
         /// </summary>
@@ -239,11 +239,11 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
         /// </remarks>
-        /// <seealso cref="GameplayActions" />
-        public void AddCallbacks(IGameplayActions instance)
+        /// <seealso cref="GameplayActionsActions" />
+        public void AddCallbacks(IGameplayActionsActions instance)
         {
-            if (instance == null || m_Wrapper.m_GameplayActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_GameplayActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_GameplayActionsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_GameplayActionsActionsCallbackInterfaces.Add(instance);
             @Tap.started += instance.OnTap;
             @Tap.performed += instance.OnTap;
             @Tap.canceled += instance.OnTap;
@@ -255,8 +255,8 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         /// <remarks>
         /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
         /// </remarks>
-        /// <seealso cref="GameplayActions" />
-        private void UnregisterCallbacks(IGameplayActions instance)
+        /// <seealso cref="GameplayActionsActions" />
+        private void UnregisterCallbacks(IGameplayActionsActions instance)
         {
             @Tap.started -= instance.OnTap;
             @Tap.performed -= instance.OnTap;
@@ -264,12 +264,12 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         }
 
         /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="GameplayActions.UnregisterCallbacks(IGameplayActions)" />.
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="GameplayActionsActions.UnregisterCallbacks(IGameplayActionsActions)" />.
         /// </summary>
-        /// <seealso cref="GameplayActions.UnregisterCallbacks(IGameplayActions)" />
-        public void RemoveCallbacks(IGameplayActions instance)
+        /// <seealso cref="GameplayActionsActions.UnregisterCallbacks(IGameplayActionsActions)" />
+        public void RemoveCallbacks(IGameplayActionsActions instance)
         {
-            if (m_Wrapper.m_GameplayActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_GameplayActionsActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
@@ -279,27 +279,27 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
         /// </remarks>
-        /// <seealso cref="GameplayActions.AddCallbacks(IGameplayActions)" />
-        /// <seealso cref="GameplayActions.RemoveCallbacks(IGameplayActions)" />
-        /// <seealso cref="GameplayActions.UnregisterCallbacks(IGameplayActions)" />
-        public void SetCallbacks(IGameplayActions instance)
+        /// <seealso cref="GameplayActionsActions.AddCallbacks(IGameplayActionsActions)" />
+        /// <seealso cref="GameplayActionsActions.RemoveCallbacks(IGameplayActionsActions)" />
+        /// <seealso cref="GameplayActionsActions.UnregisterCallbacks(IGameplayActionsActions)" />
+        public void SetCallbacks(IGameplayActionsActions instance)
         {
-            foreach (var item in m_Wrapper.m_GameplayActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_GameplayActionsActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_GameplayActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_GameplayActionsActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
     /// <summary>
-    /// Provides a new <see cref="GameplayActions" /> instance referencing this action map.
+    /// Provides a new <see cref="GameplayActionsActions" /> instance referencing this action map.
     /// </summary>
-    public GameplayActions @Gameplay => new GameplayActions(this);
+    public GameplayActionsActions @GameplayActions => new GameplayActionsActions(this);
     /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Gameplay" which allows adding and removing callbacks.
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Gameplay Actions" which allows adding and removing callbacks.
     /// </summary>
-    /// <seealso cref="GameplayActions.AddCallbacks(IGameplayActions)" />
-    /// <seealso cref="GameplayActions.RemoveCallbacks(IGameplayActions)" />
-    public interface IGameplayActions
+    /// <seealso cref="GameplayActionsActions.AddCallbacks(IGameplayActionsActions)" />
+    /// <seealso cref="GameplayActionsActions.RemoveCallbacks(IGameplayActionsActions)" />
+    public interface IGameplayActionsActions
     {
         /// <summary>
         /// Method invoked when associated input action "Tap" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.

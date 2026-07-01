@@ -3,13 +3,13 @@
     "name": "GameInputActions",
     "maps": [
         {
-            "name": "Gameplay",
-            "id": "305936d3-a64c-465a-8c0b-f9c95e36d2e2",
+            "name": "Gameplay Actions",
+            "id": "966f6827-0f77-4531-8684-6bb23eb20edf",
             "actions": [
                 {
                     "name": "Tap",
                     "type": "Button",
-                    "id": "e9a666f3-6419-4c81-b433-0b0ad474729d",
+                    "id": "7812d812-01af-41ec-9039-562f529a9b53",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -19,7 +19,7 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "57ad578a-4519-4624-9566-7a5f6ab86289",
+                    "id": "0c0ca78c-5b77-416e-96f7-27df9ddad82b",
                     "path": "<Pointer>/press",
                     "interactions": "",
                     "processors": "",
