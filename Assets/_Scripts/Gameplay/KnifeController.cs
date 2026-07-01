@@ -23,22 +23,21 @@ public class Knife : MonoBehaviour
 
 
     void Update() {
-        if (State == KnifeState.Unset) {
-          transform.position = Vector3.MoveTowards(transform.position, slideTarget, slideSpeed * Time.deltaTime);
+        switch (State) {
+          case KnifeState.Unset:
+            transform.position = Vector3.MoveTowards(transform.position, slideTarget, slideSpeed * Time.deltaTime);
 
+            if (Vector3.Distance(transform.position, slideTarget) < 0.01f) {
+              State = KnifeState.Prepared;
+              GetComponent<Collider2D>().enabled = true;
+            }
+          break;
 
-          if (Vector3.Distance(transform.position, slideTarget) < 0.01f) {
-            State = KnifeState.Prepared;
-            GetComponent<Collider2D>().enabled = true;
-          }
+          case KnifeState.Thrown:
+            transform.position += Vector3.up * speed * Time.deltaTime;
+          break;
+
         }
-
-
-        if (State == KnifeState.Thrown || State == KnifeState.Stuck) {
-          return;
-        }
-
-        transform.position += Vector3.up * speed * Time.deltaTime;
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
@@ -58,7 +57,7 @@ public class Knife : MonoBehaviour
     }
 
     public void Throw() {
-      if (State == KnifeState.Unset) {
+      if (State == KnifeState.Stuck) {
         return;
       }
 
@@ -68,10 +67,10 @@ public class Knife : MonoBehaviour
     private void Stick(Transform target) {
 
       State = KnifeState.Stuck;
+      controller?.OnSpawnKnife();
 
       transform.SetParent(target.Find("KnifeHolder"));
       transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
-      controller?.OnSpawnKnife();
     }
 }

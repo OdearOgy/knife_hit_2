@@ -15,6 +15,8 @@ public class GameController : MonoBehaviour {
   private void OnEnable() {
     if (InputManager.Instance != null) {
       InputManager.Instance.OnTap += ThrowKnife;
+      SpawnKnife();
+
     }
   }
 
@@ -30,7 +32,6 @@ public class GameController : MonoBehaviour {
   }
 
   void Start() {
-    SpawnKnife();
   }
 
   void SpawnKnife() {
@@ -50,7 +51,9 @@ public class GameController : MonoBehaviour {
       return;
     }
 
-    currentKnife.Throw();
-    currentKnife = null;
+    if (currentKnife.State == KnifeState.Prepared) {
+      currentKnife.Throw();
+      currentKnife = null;
+    }
   }
 }
