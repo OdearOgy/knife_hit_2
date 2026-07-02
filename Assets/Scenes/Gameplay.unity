@@ -279,6 +279,7 @@ MonoBehaviour:
   spawnOffset: 1
   knifePrefab: {fileID: 7621742913313600164, guid: 79e95462050bd4d97b09220c280ca18d, type: 3}
   spawnPoint: {fileID: 125606151}
+  targetTransform: {fileID: 185663195}
 --- !u!1 &650436253
 GameObject:
   m_ObjectHideFlags: 0
@@ -599,7 +600,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13b291884ea6b41c9a1fd1c5a95938c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  currentLevel: {fileID: 0}
+  allLevels:
+  - {fileID: 11400000, guid: b552354a0eae24641a7ffd5b33056708, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -105,6 +105,11 @@ public class Knife : MonoBehaviour
     }
   }
 
+  public void SetStuck()
+  {
+    State = KnifeState.Stuck;
+  }
+
   private void Stick(Transform target)
   {
     State = KnifeState.Stuck;

@@ -1,6 +1,4 @@
-
 using UnityEngine;
-
 
 public class GameController : MonoBehaviour
 {
@@ -9,9 +7,10 @@ public class GameController : MonoBehaviour
 
   [SerializeField] private Knife knifePrefab;
   [SerializeField] private Transform spawnPoint;
+  [SerializeField] private Transform targetTransform;
 
   private Knife currentKnife;
-  private int knifeCount;
+  private int knivesRemaining;
 
 
   private void OnEnable()
@@ -34,7 +33,7 @@ public class GameController : MonoBehaviour
   {
     currentKnife = null;
 
-    if (knifeCount == 0)
+    if (knivesRemaining == 0)
     {
       GameManager.Instance.SetState(GameState.Won);
       return;
@@ -51,8 +50,44 @@ public class GameController : MonoBehaviour
 
   void Start()
   {
-    knifeCount = LevelManager.Instance?.CurrentLevel?.knifeCount ?? 8;
+    var config = LevelManager.Instance?.CurrentLevel;
+    if (config != null)
+    {
+      knivesRemaining = config.knivesToThrow;
+      SpawnStuckKnives(config);
+      SpawnApples(config);
+    }
+    else
+    {
+      knivesRemaining = 8;
+    }
+
     SpawnKnife();
+  }
+
+  void SpawnStuckKnives(LevelConfig config)
+  {
+    if (config.stuckKnifeAngles == null || targetTransform == null) return;
+
+    Transform knifeHolder = targetTransform.Find("KnifeHolder");
+    if (knifeHolder == null) return;
+
+    foreach (float angle in config.stuckKnifeAngles)
+    {
+      Knife stuckKnife = Instantiate(knifePrefab, knifeHolder);
+      stuckKnife.transform.localPosition = Vector3.zero;
+      stuckKnife.transform.localRotation = Quaternion.Euler(0, 0, angle);
+      stuckKnife.GetComponent<Collider2D>().enabled = true;
+      stuckKnife.SetStuck();
+    }
+  }
+
+  void SpawnApples(LevelConfig config)
+  {
+    if (targetTransform == null) return;
+
+    int appleCount = Random.Range(config.minApples, config.maxApples + 1);
+    // Apple spawning placeholder - requires apple prefab
   }
 
   void SpawnKnife()
@@ -67,9 +102,9 @@ public class GameController : MonoBehaviour
   {
     if (GameManager.Instance.State != GameState.Playing) return;
     if (currentKnife == null) return;
-    if (knifeCount <= 0) return;
+    if (knivesRemaining <= 0) return;
 
-    knifeCount--;
+    knivesRemaining--;
     currentKnife.Throw();
   }
 }
