@@ -152,10 +152,11 @@ public class Knife : MonoBehaviour
     {
       float originalHeight = box.size.y;
       float visibleHeight = originalHeight * 0.4f;
-      float offsetFromCenter = (originalHeight / 2f) - (visibleHeight / 2f);
+      float offsetFromCenter = (originalHeight / 2f) + (visibleHeight / 2f);
+      // float offsetFromCenter = visibleHeight;
 
       box.size = new Vector2(box.size.x, visibleHeight);
-      box.offset = new Vector2(box.offset.x, offsetFromCenter);
+      box.offset = new Vector2(box.offset.x, -offsetFromCenter);
     }
     else if (col is CircleCollider2D circle)
     {
