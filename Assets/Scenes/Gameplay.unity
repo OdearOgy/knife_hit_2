@@ -216,7 +216,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8331436633274323944, guid: 1319168638a6f46a99a84795873f2f87, type: 3}
       propertyPath: m_Radius
-      value: 0.6
+      value: 0.76
       objectReference: {fileID: 0}
     - target: {fileID: 8331436633274323944, guid: 1319168638a6f46a99a84795873f2f87, type: 3}
       propertyPath: m_IsTrigger
@@ -284,7 +284,7 @@ MonoBehaviour:
   knifePrefab: {fileID: 7621742913313600164, guid: 79e95462050bd4d97b09220c280ca18d, type: 3}
   spawnPoint: {fileID: 125606151}
   targetTransform: {fileID: 185663195}
-  logRadius: 0.6
+  logRadius: 0.76
 --- !u!1 &650436253
 GameObject:
   m_ObjectHideFlags: 0

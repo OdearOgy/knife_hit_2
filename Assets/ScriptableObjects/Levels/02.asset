@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelConfig
   levelNumber: 2
   levelName: Oak
-  knivesToThrow: 9
+  knivesToThrow: 3
   stuckKnifeAngles:
   - 90
   - 270
