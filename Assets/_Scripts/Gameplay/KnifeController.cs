@@ -24,6 +24,25 @@ public class Knife : MonoBehaviour
   private GameController controller;
   public void SetController(GameController c) => controller = c;
 
+  private float originalColliderHeight;
+  private float originalColliderOffsetY;
+  private float originalColliderRadius;
+
+  void Awake()
+  {
+    Collider2D col = GetComponent<Collider2D>();
+    if (col is BoxCollider2D box)
+    {
+      originalColliderHeight = box.size.y;
+      originalColliderOffsetY = box.offset.y;
+    }
+    else if (col is CircleCollider2D circle)
+    {
+      originalColliderRadius = circle.radius;
+      originalColliderOffsetY = circle.offset.y;
+    }
+  }
+
 
   void Update()
   {
@@ -86,6 +105,7 @@ public class Knife : MonoBehaviour
     slideTarget = target;
     slideSpeed = speed;
     GetComponent<Collider2D>().enabled = false;
+    ResetColliderToFull();
   }
 
   public void Throw()
@@ -117,7 +137,52 @@ public class Knife : MonoBehaviour
     transform.SetParent(target.Find("KnifeHolder"));
     transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
+    // Shrink collider to only cover visible part
+    ShrinkColliderToVisiblePart();
+
     controller?.OnSpawnKnife();
+  }
+
+  public void ShrinkColliderToVisiblePart()
+  {
+    Collider2D col = GetComponent<Collider2D>();
+    if (col == null) return;
+
+    if (col is BoxCollider2D box)
+    {
+      float originalHeight = box.size.y;
+      float visibleHeight = originalHeight * 0.4f;
+      float offsetFromCenter = (originalHeight / 2f) - (visibleHeight / 2f);
+
+      box.size = new Vector2(box.size.x, visibleHeight);
+      box.offset = new Vector2(box.offset.x, offsetFromCenter);
+    }
+    else if (col is CircleCollider2D circle)
+    {
+      float originalRadius = circle.radius;
+      float visibleRadius = originalRadius * 0.4f;
+      float offsetFromCenter = originalRadius - visibleRadius;
+
+      circle.radius = visibleRadius;
+      circle.offset = new Vector2(circle.offset.x, offsetFromCenter);
+    }
+  }
+
+  public void ResetColliderToFull()
+  {
+    Collider2D col = GetComponent<Collider2D>();
+    if (col == null) return;
+
+    if (col is BoxCollider2D box)
+    {
+      box.size = new Vector2(box.size.x, originalColliderHeight);
+      box.offset = new Vector2(box.offset.x, originalColliderOffsetY);
+    }
+    else if (col is CircleCollider2D circle)
+    {
+      circle.radius = originalColliderRadius;
+      circle.offset = new Vector2(circle.offset.x, originalColliderOffsetY);
+    }
   }
 
   private void FallDown()

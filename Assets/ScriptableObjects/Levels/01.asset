@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelConfig
   levelNumber: 1
   levelName: Oak
-  knivesToThrow: 7
-  stuckKnifeAngles: []
+  knivesToThrow: 2
+  stuckKnifeAngles:
+  - 90
   minApples: 0
   maxApples: 2
   rotationSpeed: 80

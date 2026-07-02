@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class GameController : MonoBehaviour
 {
@@ -36,9 +38,9 @@ public class GameController : MonoBehaviour
     if (knivesRemaining == 0)
     {
       GameManager.Instance.SetState(GameState.Won);
+      StartCoroutine(WinLevelAfterDelay());
       return;
     }
-
 
     SpawnKnife();
   }
@@ -46,11 +48,41 @@ public class GameController : MonoBehaviour
   public void OnKnifeMissed()
   {
     currentKnife = null;
+    StartCoroutine(GameOverAfterDelay());
+  }
+
+  IEnumerator WinLevelAfterDelay()
+  {
+    yield return new WaitForSeconds(1f);
+    Debug.Log($"[GameController] WinLevelAfterDelay - LevelManager.Instance: {LevelManager.Instance != null}");
+    if (LevelManager.Instance != null)
+    {
+      LevelManager.Instance.LoadNextLevel();
+    }
+    else
+    {
+      Debug.LogError("[GameController] LevelManager.Instance is null!");
+    }
+    ReloadScene();
+  }
+
+  IEnumerator GameOverAfterDelay()
+  {
+    yield return new WaitForSeconds(1f);
+    LevelManager.Instance.RestartFromLevelOne();
+    ReloadScene();
+  }
+
+  void ReloadScene()
+  {
+    GameManager.Instance.SetState(GameState.Playing);
+    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
   }
 
   void Start()
   {
     var config = LevelManager.Instance?.CurrentLevel;
+    Debug.Log($"[GameController] Start - LevelManager.Instance: {LevelManager.Instance != null}, Config: {config?.levelName ?? "NULL"}");
     if (config != null)
     {
       knivesRemaining = config.knivesToThrow;
@@ -60,6 +92,7 @@ public class GameController : MonoBehaviour
     else
     {
       knivesRemaining = 8;
+      Debug.LogWarning("[GameController] No level config found, using defaults");
     }
 
     SpawnKnife();
@@ -97,37 +130,8 @@ public class GameController : MonoBehaviour
       stuckKnife.SetStuck();
       
       // Shrink collider to only cover visible part sticking out of log
-      ShrinkColliderToVisiblePart(stuckKnife);
+      stuckKnife.ShrinkColliderToVisiblePart();
     }
-  }
-  
-  void ShrinkColliderToVisiblePart(Knife stuckKnife)
-  {
-    Collider2D col = stuckKnife.GetComponent<Collider2D>();
-    if (col == null) return;
-    
-    // The knife points outward from log center.
-    // Bottom half is inside/hidden, top ~40% is visible and should collide.
-    
-    if (col is BoxCollider2D box)
-    {
-      float originalHeight = box.size.y;
-      float visibleHeight = originalHeight * 0.4f; // Only top 40% sticks out
-      float offsetFromCenter = (originalHeight / 2f) - (visibleHeight / 2f);
-      
-      box.size = new Vector2(box.size.x, visibleHeight);
-      box.offset = new Vector2(box.offset.x, offsetFromCenter); // Shift toward blade tip
-    }
-    else if (col is CircleCollider2D circle)
-    {
-      float originalRadius = circle.radius;
-      float visibleRadius = originalRadius * 0.4f;
-      float offsetFromCenter = originalRadius - visibleRadius;
-      
-      circle.radius = visibleRadius;
-      circle.offset = new Vector2(circle.offset.x, offsetFromCenter); // Shift toward blade tip
-    }
-    // Add CapsuleCollider2D etc. if needed
   }
 
   void SpawnApples(LevelConfig config)

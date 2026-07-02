@@ -206,6 +206,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4652008508121689803, guid: 1319168638a6f46a99a84795873f2f87, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4667660678437884308, guid: 1319168638a6f46a99a84795873f2f87, type: 3}
       propertyPath: m_Name
       value: Target
@@ -280,6 +284,7 @@ MonoBehaviour:
   knifePrefab: {fileID: 7621742913313600164, guid: 79e95462050bd4d97b09220c280ca18d, type: 3}
   spawnPoint: {fileID: 125606151}
   targetTransform: {fileID: 185663195}
+  logRadius: 0.6
 --- !u!1 &650436253
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,6 +606,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allLevels:
+  - {fileID: 11400000, guid: b552354a0eae24641a7ffd5b33056708, type: 2}
+  - {fileID: 11400000, guid: cd53099a3d691448abe64eec6cdd5c01, type: 2}
+  - {fileID: 11400000, guid: 3277fa7838ad4441fbd2f04a96b8a31c, type: 2}
   - {fileID: 11400000, guid: b552354a0eae24641a7ffd5b33056708, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
