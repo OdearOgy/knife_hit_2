@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public enum GameState {
+public enum GameState
+{
   Playing,
   Won,
   Lost
@@ -8,21 +9,25 @@ public enum GameState {
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance {get; private set;}
+  public static GameManager Instance { get; private set; }
 
-    public GameState State { get; private set; } = GameState.Playing;
+  public GameState State { get; private set; } = GameState.Playing;
 
 
-    private void Awake() {
-      if (Instance != null) {
-        Destroy(gameObject);
-        return;
-      }
-
-      Instance = this;
+  private void Awake()
+  {
+    if (Instance != null)
+    {
+      Destroy(gameObject);
+      return;
     }
 
-    public void SetState(GameState state) {
-      State = state;
-    }
+    Instance = this;
+    DontDestroyOnLoad(gameObject);
+  }
+
+  public void SetState(GameState state)
+  {
+    State = state;
+  }
 }
