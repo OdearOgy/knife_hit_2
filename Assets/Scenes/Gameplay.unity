@@ -214,6 +214,10 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 0.6
       objectReference: {fileID: 0}
+    - target: {fileID: 8331436633274323944, guid: 1319168638a6f46a99a84795873f2f87, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -595,6 +599,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13b291884ea6b41c9a1fd1c5a95938c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  currentLevel: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    public static LevelManager Instance { get; private set; }
+  public static LevelManager Instance { get; private set; }
 
-    [SerializeField] private LevelConfig currentLevel;
-    public LevelConfig CurrentLevel => currentLevel;
+  [SerializeField] private LevelConfig currentLevel;
+  public LevelConfig CurrentLevel => currentLevel;
 
-    private void Awake()
+  private void Awake()
+  {
+    if (Instance != null)
     {
-        if (Instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
+      Destroy(gameObject);
+      return;
     }
+    Instance = this;
+  }
 }
