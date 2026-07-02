@@ -1,10 +1,22 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
-    public void PlayGame()
+  public Button playButton;
+
+  void Start()
+  {
+    if (playButton != null)
     {
-        SceneManager.LoadScene("Gameplay");
+      playButton.onClick.AddListener(PlayGame);
     }
+  }
+
+
+  public void PlayGame()
+  {
+    SceneManager.LoadScene("Gameplay");
+  }
 }
