@@ -89,6 +89,7 @@ public class TargetController : MonoBehaviour
   {
     StartCoroutine(NudgeUp());
     StartCoroutine(FlashWhite());
+    SoundManager.Instance?.PlayTargetHit();
   }
 
   private IEnumerator NudgeUp()
