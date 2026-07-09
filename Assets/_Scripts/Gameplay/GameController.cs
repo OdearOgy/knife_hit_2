@@ -111,7 +111,7 @@ public class GameController : MonoBehaviour
     {
       // Convert angle to radians for position calculation
       float rad = angle * Mathf.Deg2Rad;
-      
+
       // Position on the log's circumference
       Vector3 positionOnCircle = new Vector3(
         Mathf.Cos(rad) * logRadius,
@@ -121,14 +121,14 @@ public class GameController : MonoBehaviour
 
       Knife stuckKnife = Instantiate(knifePrefab, knifeHolder);
       stuckKnife.transform.localPosition = positionOnCircle;
-      
+
       // Rotate so knife points outward from center (blade embedded in log)
       // If your knife sprite points UP by default, add +90 to point outward
-      stuckKnife.transform.localRotation = Quaternion.Euler(0, 0, angle - 90f);
-      
+      stuckKnife.transform.localRotation = Quaternion.Euler(0, 0, angle + 90f);
+
       stuckKnife.GetComponent<Collider2D>().enabled = true;
       stuckKnife.SetStuck();
-      
+
       // Shrink collider to only cover visible part sticking out of log
       stuckKnife.ShrinkColliderToVisiblePart();
     }

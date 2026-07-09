@@ -133,9 +133,8 @@ public class Knife : MonoBehaviour
   private void Stick(Transform target)
   {
     State = KnifeState.Stuck;
-
     transform.SetParent(target.Find("KnifeHolder"));
-    transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+    transform.position = new Vector3(transform.position.x, transform.position.y, -5f);
 
     // Shrink collider to only cover visible part
     ShrinkColliderToVisiblePart();
@@ -152,10 +151,11 @@ public class Knife : MonoBehaviour
     {
       float originalHeight = box.size.y;
       float visibleHeight = originalHeight * 0.4f;
-      float offsetFromCenter = (originalHeight / 2f) - (visibleHeight / 2f);
+      float offsetFromCenter = (originalHeight / 2f) + (visibleHeight / 2f);
+      // float offsetFromCenter = visibleHeight;
 
       box.size = new Vector2(box.size.x, visibleHeight);
-      box.offset = new Vector2(box.offset.x, offsetFromCenter);
+      box.offset = new Vector2(box.offset.x, -offsetFromCenter);
     }
     else if (col is CircleCollider2D circle)
     {

@@ -10,18 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af5215c61e7b745089a3b0c0fa079b4f, type: 3}
-  m_Name: 01
+  m_Name: 04
   m_EditorClassIdentifier: Assembly-CSharp::LevelConfig
-  levelNumber: 1
+  levelNumber: 4
   levelName: Oak
-  knivesToThrow: 5
+  knivesToThrow: 10
   stuckKnifeAngles:
   - 90
-  - 10
-  - 40
+  - 270
   minApples: 0
-  maxApples: 2
+  maxApples: 4
   rotationSpeed: 100
-  clockwise: 1
-  changesDirection: 0
-  targetSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  clockwise: 0
+  changesDirection: 1
+  targetSprite: {fileID: 0}

@@ -1,31 +1,10 @@
 fileFormatVersion: 2
-guid: c0adaa26c065b6745b90f1b3987383c2
+guid: da8627ce5de6748b5bf15c47138c01cf
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3996037046797192172
-    second: OnlyMiddleKnife_0
-  - first:
-      213: 1478766244677618774
-    second: OnlyMiddleKnife_1
-  - first:
-      213: 4654697562556151427
-    second: OnlyMiddleKnife_2
-  - first:
-      213: -2891245880325916023
-    second: OnlyMiddleKnife_3
-  - first:
-      213: -8145152234814400565
-    second: OnlyMiddleKnife_4
-  - first:
-      213: -138259576676482797
-    second: OnlyMiddleKnife_5
-  - first:
-      213: -4996199358066252353
-    second: OnlyMiddleKnife_6
-  - first:
-      213: -658528102293662193
-    second: OnlyMiddleKnife_7
+      213: 8524827877590128127
+    second: BasicKnife_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -58,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 2
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -68,11 +47,11 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 1
-  spriteMeshType: 1
+  spriteExtrude: 0
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 200
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -93,10 +72,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -117,27 +96,53 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: OnlyMiddleKnife_0
+      name: BasicKnife_0
       rect:
         serializedVersion: 2
-        x: 203
-        y: 400
-        width: 1142
-        height: 201
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 0
+        width: 68
+        height: 397
+      alignment: 9
+      pivot: {x: 0.49614614, y: 0.88296217}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cebc5aba586c47730800000000000000
-      internalID: 3996037046797192172
+      spriteID: ff55b17c9c54e4670800000000000000
+      internalID: 8524827877590128127
       vertices: []
       indices: 
       edges: []
@@ -146,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 4b59092db2aaf454b9b3baf62f7effbd
+    spriteID: 46320857ac5e848f5883f908a1903569
     internalID: 0
     vertices: []
     indices: 
@@ -156,14 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      OnlyMiddleKnife_0: 3996037046797192172
-      OnlyMiddleKnife_1: 1478766244677618774
-      OnlyMiddleKnife_2: 4654697562556151427
-      OnlyMiddleKnife_3: -2891245880325916023
-      OnlyMiddleKnife_4: -8145152234814400565
-      OnlyMiddleKnife_5: -138259576676482797
-      OnlyMiddleKnife_6: -4996199358066252353
-      OnlyMiddleKnife_7: -658528102293662193
+      BasicKnife_0: 8524827877590128127
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

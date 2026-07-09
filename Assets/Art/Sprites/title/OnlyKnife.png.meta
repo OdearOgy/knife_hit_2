@@ -1,16 +1,22 @@
 fileFormatVersion: 2
-guid: bf4a057583fc3db4c8a5c3e9add62ed7
+guid: 26b4e70a7aef5164497eb376c6d5ea8a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7543820086513204139
-    second: OnlyHit_0
+      213: -3933092660304530457
+    second: OnlyKnife_0
   - first:
-      213: -5104784859582661934
-    second: OnlyHit_1
+      213: -4604712438954120823
+    second: OnlyKnife_1
   - first:
-      213: 2309518746214634962
-    second: OnlyHit_2
+      213: 5329938711034465994
+    second: OnlyKnife_2
+  - first:
+      213: -3166400976901348261
+    second: OnlyKnife_3
+  - first:
+      213: -5659920841488437758
+    second: OnlyKnife_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -102,17 +108,43 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: OnlyHit_2
+      name: OnlyKnife_2
       rect:
         serializedVersion: 2
-        x: 409
-        y: 124
-        width: 760
-        height: 376
+        x: 131
+        y: 489
+        width: 1221
+        height: 535
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -121,8 +153,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2d59a36301f0d0020800000000000000
-      internalID: 2309518746214634962
+      spriteID: ace00d9b40fb7f940800000000000000
+      internalID: 5329938711034465994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OnlyKnife_5
+      rect:
+        serializedVersion: 2
+        x: 888
+        y: 687
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c17a0c214fb5d194e83d279146be838a
+      internalID: -462613030
       vertices: []
       indices: 
       edges: []
@@ -131,7 +185,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 669c8c8d354a5f54089367f18bcfdde1
+    spriteID: 945f281940fe3e741b7647a0f5d3c5ef
     internalID: 0
     vertices: []
     indices: 
@@ -143,9 +197,12 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      OnlyHit_0: 7543820086513204139
-      OnlyHit_1: -5104784859582661934
-      OnlyHit_2: 2309518746214634962
+      OnlyKnife_0: -3933092660304530457
+      OnlyKnife_1: -4604712438954120823
+      OnlyKnife_2: 5329938711034465994
+      OnlyKnife_3: -3166400976901348261
+      OnlyKnife_4: -5659920841488437758
+      OnlyKnife_5: -462613030
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
