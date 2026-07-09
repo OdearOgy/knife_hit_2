@@ -83,50 +83,30 @@ public class GameController : MonoBehaviour
   void Start()
   {
     var config = LevelManager.Instance?.CurrentLevel;
-    Debug.Log($"[GameController] Start - LevelManager.Instance: {LevelManager.Instance != null}, Config: {config?.levelName ?? "NULL"}");
-    int totalKnives = 0;
+
     if (config != null)
     {
       knivesRemaining = config.knivesToThrow;
-      totalKnives = config.knivesToThrow;
-    }
+      knifeCountUI?.Setup(config.knivesToThrow);
 
-
-    if (knifeCountUI != null)
-    {
-      knifeCountUI.Setup(totalKnives);
-
-      Vector3 uiPos = knifeCountUI.transform.position;
-      uiPos.y = spawnPoint.position.y;
-      knifeCountUI.transform.position = uiPos;
-    }
-
-    if (targetTransform != null)
-    {
-      TargetController targetController = targetTransform.GetComponent<TargetController>();
-      if (targetController != null)
+      if (targetTransform != null)
       {
-        targetController.OnPopupComplete += () =>
+        TargetController targetController = targetTransform.GetComponent<TargetController>();
+        if (targetController != null)
         {
-          if (config != null)
+          targetController.OnPopupComplete += () =>
           {
             SpawnStuckKnives(config);
             SpawnApples(config);
-          }
-        };
-      }
-      else
-      {
-        if (config != null)
+          };
+        }
+        else
         {
           SpawnStuckKnives(config);
           SpawnApples(config);
         }
       }
-    }
-    else
-    {
-      if (config != null)
+      else
       {
         SpawnStuckKnives(config);
         SpawnApples(config);
