@@ -255,8 +255,28 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8026738589488745905, guid: 1319168638a6f46a99a84795873f2f87, type: 3}
+      propertyPath: flashDuration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8026738589488745905, guid: 1319168638a6f46a99a84795873f2f87, type: 3}
+      propertyPath: nudgeDistance
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8026738589488745905, guid: 1319168638a6f46a99a84795873f2f87, type: 3}
+      propertyPath: nudgeDuration
+      value: 0.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 8026738589488745905, guid: 1319168638a6f46a99a84795873f2f87, type: 3}
+      propertyPath: shakeDuration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8026738589488745905, guid: 1319168638a6f46a99a84795873f2f87, type: 3}
       propertyPath: popupOvershoot
       value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8026738589488745905, guid: 1319168638a6f46a99a84795873f2f87, type: 3}
+      propertyPath: shakeIntensity
+      value: 0.11
       objectReference: {fileID: 0}
     - target: {fileID: 8331436633274323944, guid: 1319168638a6f46a99a84795873f2f87, type: 3}
       propertyPath: m_Radius
