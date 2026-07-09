@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class GameController : MonoBehaviour
@@ -64,20 +63,14 @@ public class GameController : MonoBehaviour
     {
       Debug.LogError("[GameController] LevelManager.Instance is null!");
     }
-    ReloadScene();
+    GameManager.Instance?.SetState(GameState.Playing);
+    GameSceneManager.Instance?.RestartGameplay();
   }
 
   IEnumerator GameOverAfterDelay()
   {
     yield return new WaitForSeconds(1f);
-    LevelManager.Instance.RestartFromLevelOne();
-    ReloadScene();
-  }
-
-  void ReloadScene()
-  {
-    GameManager.Instance.SetState(GameState.Playing);
-    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    GameSceneManager.Instance?.LoadGameOver();
   }
 
   void Start()

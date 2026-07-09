@@ -26,7 +26,6 @@ public class LevelManager : MonoBehaviour
       return;
     }
     Instance = this;
-    DontDestroyOnLoad(gameObject);
   }
 
   public void LoadNextLevel()

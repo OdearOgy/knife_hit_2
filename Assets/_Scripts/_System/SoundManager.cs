@@ -19,7 +19,6 @@ public class SoundManager : MonoBehaviour
     }
 
     Instance = this;
-    DontDestroyOnLoad(gameObject);
 
     sfxSources = new AudioSource[sfxPoolSize];
     for (int i = 0; i < sfxPoolSize; i++)
@@ -37,9 +36,7 @@ public class SoundManager : MonoBehaviour
     AudioSource src = sfxSources[sfxIndex];
     sfxIndex = (sfxIndex + 1) % sfxSources.Length;
 
-    src.clip = clip;
-    src.volume = volume;
-    src.Play();
+    src.PlayOneShot(clip, volume);
   }
 
   public void PlayTargetHit() => PlaySFX(library?.targetHit);
