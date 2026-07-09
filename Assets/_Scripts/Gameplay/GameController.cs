@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour
   [SerializeField] private Knife knifePrefab;
   [SerializeField] private Transform spawnPoint;
   [SerializeField] private Transform targetTransform;
+  [SerializeField] private KnifeCountUI knifeCountUI;
 
   private Knife currentKnife;
   private int knivesRemaining;
@@ -83,14 +84,21 @@ public class GameController : MonoBehaviour
   {
     var config = LevelManager.Instance?.CurrentLevel;
     Debug.Log($"[GameController] Start - LevelManager.Instance: {LevelManager.Instance != null}, Config: {config?.levelName ?? "NULL"}");
+    int totalKnives = 0;
     if (config != null)
     {
       knivesRemaining = config.knivesToThrow;
+      totalKnives = config.knivesToThrow;
     }
-    else
+
+
+    if (knifeCountUI != null)
     {
-      knivesRemaining = 8;
-      Debug.LogWarning("[GameController] No level config found, using defaults");
+      knifeCountUI.Setup(totalKnives);
+
+      Vector3 uiPos = knifeCountUI.transform.position;
+      uiPos.y = spawnPoint.position.y;
+      knifeCountUI.transform.position = uiPos;
     }
 
     if (targetTransform != null)
@@ -128,8 +136,7 @@ public class GameController : MonoBehaviour
     SpawnKnife();
   }
 
-  [SerializeField] private float logRadius = 1.5f; // Adjust to match your target sprite size
-
+  [SerializeField] private float logRadius = 1.5f;
   void SpawnStuckKnives(LevelConfig config)
   {
     if (config.stuckKnifeAngles == null || targetTransform == null) return;
@@ -139,10 +146,8 @@ public class GameController : MonoBehaviour
 
     foreach (float angle in config.stuckKnifeAngles)
     {
-      // Convert angle to radians for position calculation
       float rad = angle * Mathf.Deg2Rad;
 
-      // Position on the log's circumference
       Vector3 positionOnCircle = new Vector3(
         Mathf.Cos(rad) * logRadius,
         Mathf.Sin(rad) * logRadius,
@@ -152,14 +157,11 @@ public class GameController : MonoBehaviour
       Knife stuckKnife = Instantiate(knifePrefab, knifeHolder);
       stuckKnife.transform.localPosition = positionOnCircle;
 
-      // Rotate so knife points outward from center (blade embedded in log)
-      // If your knife sprite points UP by default, add +90 to point outward
       stuckKnife.transform.localRotation = Quaternion.Euler(0, 0, angle + 90f);
 
       stuckKnife.GetComponent<Collider2D>().enabled = true;
       stuckKnife.SetStuck();
 
-      // Shrink collider to only cover visible part sticking out of log
       stuckKnife.ShrinkColliderToVisiblePart();
     }
   }
@@ -187,6 +189,7 @@ public class GameController : MonoBehaviour
     if (knivesRemaining <= 0) return;
 
     knivesRemaining--;
+    knifeCountUI?.MarkOneUsed();
     currentKnife.Throw();
   }
 }
