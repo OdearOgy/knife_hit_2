@@ -13,7 +13,8 @@ public class InputManager : MonoBehaviour
        return;
      }
 
-      Instance = this;
+     Instance = this;
+     DontDestroyOnLoad(gameObject);
 
      input = new GameInputActions();
     }
