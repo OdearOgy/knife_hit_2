@@ -17,10 +17,19 @@ public class TargetController : MonoBehaviour
 
   public event System.Action OnPopupComplete;
 
+  [Header("Hit Feedback")]
+  [SerializeField] private float nudgeDistance = 0.05f;
+  [SerializeField] private float nudgeDuration = 0.06f;
+  [SerializeField] private float flashDuration = 0.1f;
+  [SerializeField] private GameObject flashOverlay;
+
+  private Vector3 basePosition;
+
   private void Awake()
   {
     originalScale = transform.localScale;
     transform.localScale = Vector3.zero;
+    basePosition = transform.position;
   }
 
   void Start()
@@ -74,5 +83,43 @@ public class TargetController : MonoBehaviour
 
     transform.localScale = finalScale;
     OnPopupComplete?.Invoke();
+  }
+
+  public void OnHit()
+  {
+    StartCoroutine(NudgeUp());
+    StartCoroutine(FlashWhite());
+  }
+
+  private IEnumerator NudgeUp()
+  {
+    Vector3 upPos = basePosition + new Vector3(0f, nudgeDistance, 0f);
+
+    float elapsed = 0f;
+    while (elapsed < nudgeDuration)
+    {
+      transform.position = Vector3.Lerp(basePosition, upPos, elapsed / nudgeDuration);
+      elapsed += Time.deltaTime;
+      yield return null;
+    }
+    transform.position = upPos;
+
+    elapsed = 0f;
+    while (elapsed < nudgeDuration)
+    {
+      transform.position = Vector3.Lerp(upPos, basePosition, elapsed / nudgeDuration);
+      elapsed += Time.deltaTime;
+      yield return null;
+    }
+    transform.position = basePosition;
+  }
+
+  private IEnumerator FlashWhite()
+  {
+    if (flashOverlay == null) yield break;
+
+    flashOverlay.SetActive(true);
+    yield return new WaitForSeconds(flashDuration);
+    flashOverlay.SetActive(false);
   }
 }
