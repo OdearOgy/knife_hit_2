@@ -86,13 +86,43 @@ public class GameController : MonoBehaviour
     if (config != null)
     {
       knivesRemaining = config.knivesToThrow;
-      SpawnStuckKnives(config);
-      SpawnApples(config);
     }
     else
     {
       knivesRemaining = 8;
       Debug.LogWarning("[GameController] No level config found, using defaults");
+    }
+
+    if (targetTransform != null)
+    {
+      TargetController targetController = targetTransform.GetComponent<TargetController>();
+      if (targetController != null)
+      {
+        targetController.OnPopupComplete += () =>
+        {
+          if (config != null)
+          {
+            SpawnStuckKnives(config);
+            SpawnApples(config);
+          }
+        };
+      }
+      else
+      {
+        if (config != null)
+        {
+          SpawnStuckKnives(config);
+          SpawnApples(config);
+        }
+      }
+    }
+    else
+    {
+      if (config != null)
+      {
+        SpawnStuckKnives(config);
+        SpawnApples(config);
+      }
     }
 
     SpawnKnife();

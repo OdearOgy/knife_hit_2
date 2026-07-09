@@ -15,6 +15,8 @@ public class TargetController : MonoBehaviour
   private float popupOvershoot = 1.15f;
   private Vector3 originalScale;
 
+  public event System.Action OnPopupComplete;
+
   private void Awake()
   {
     originalScale = transform.localScale;
@@ -71,5 +73,6 @@ public class TargetController : MonoBehaviour
     }
 
     transform.localScale = finalScale;
+    OnPopupComplete?.Invoke();
   }
 }
