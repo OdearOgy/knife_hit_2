@@ -20,9 +20,9 @@ public class TargetController : MonoBehaviour
   [Header("Hit Feedback")]
   [SerializeField] private float nudgeDistance = 0.05f;
   [SerializeField] private float nudgeDuration = 0.06f;
-  [SerializeField] private float flashDuration = 0.08f;
+  [SerializeField] private float flashDuration = 0.1f;
+  [SerializeField] private GameObject flashOverlay;
 
-  private SpriteRenderer targetSprite;
   private Vector3 basePosition;
 
   private void Awake()
@@ -30,7 +30,6 @@ public class TargetController : MonoBehaviour
     originalScale = transform.localScale;
     transform.localScale = Vector3.zero;
     basePosition = transform.position;
-    targetSprite = GetComponentInChildren<SpriteRenderer>();
   }
 
   void Start()
@@ -89,8 +88,7 @@ public class TargetController : MonoBehaviour
   public void OnHit()
   {
     StartCoroutine(NudgeUp());
-    if (targetSprite != null)
-      StartCoroutine(FlashWhite());
+    StartCoroutine(FlashWhite());
   }
 
   private IEnumerator NudgeUp()
@@ -118,9 +116,10 @@ public class TargetController : MonoBehaviour
 
   private IEnumerator FlashWhite()
   {
-    Color original = targetSprite.color;
-    targetSprite.color = Color.white;
+    if (flashOverlay == null) yield break;
+
+    flashOverlay.SetActive(true);
     yield return new WaitForSeconds(flashDuration);
-    targetSprite.color = original;
+    flashOverlay.SetActive(false);
   }
 }

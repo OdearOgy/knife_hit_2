@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 180188241655646847}
   m_Layer: 0
   m_Name: LogSprite
-  m_TagString: Untagged
+  m_TagString: TargetSprite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -140,6 +140,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TargetController
   rotationSpeed: 120
   isClockwise: 1
+  nudgeDistance: 0.05
+  nudgeDuration: 0.06
+  flashDuration: 0.1
 --- !u!58 &8331436633274323944
 CircleCollider2D:
   m_ObjectHideFlags: 0
