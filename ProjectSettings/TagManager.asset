@@ -7,6 +7,9 @@ TagManager:
   - Target
   - Knife
   - TargetSprite
+  - PlayButton
+  - RestartButton
+  - HomeButton
   layers:
   - Default
   - TransparentFX

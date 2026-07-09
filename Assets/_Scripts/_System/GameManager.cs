@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
 
   public GameState State { get; private set; } = GameState.Playing;
 
-
   private void Awake()
   {
     if (Instance != null)

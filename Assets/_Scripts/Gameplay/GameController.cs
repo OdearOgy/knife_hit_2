@@ -15,7 +15,6 @@ public class GameController : MonoBehaviour
   private Knife currentKnife;
   private int knivesRemaining;
 
-
   private void OnEnable()
   {
     if (InputManager.Instance != null)
@@ -55,14 +54,9 @@ public class GameController : MonoBehaviour
   IEnumerator WinLevelAfterDelay()
   {
     yield return new WaitForSeconds(1f);
-    Debug.Log($"[GameController] WinLevelAfterDelay - LevelManager.Instance: {LevelManager.Instance != null}");
     if (LevelManager.Instance != null)
     {
       LevelManager.Instance.LoadNextLevel();
-    }
-    else
-    {
-      Debug.LogError("[GameController] LevelManager.Instance is null!");
     }
     ReloadScene();
   }
@@ -70,8 +64,8 @@ public class GameController : MonoBehaviour
   IEnumerator GameOverAfterDelay()
   {
     yield return new WaitForSeconds(1f);
-    LevelManager.Instance.RestartFromLevelOne();
-    ReloadScene();
+    GameManager.Instance.SetState(GameState.Playing);
+    SceneManager.LoadScene("GameOver");
   }
 
   void ReloadScene()
@@ -136,12 +130,9 @@ public class GameController : MonoBehaviour
 
       Knife stuckKnife = Instantiate(knifePrefab, knifeHolder);
       stuckKnife.transform.localPosition = positionOnCircle;
-
       stuckKnife.transform.localRotation = Quaternion.Euler(0, 0, angle + 90f);
-
       stuckKnife.GetComponent<Collider2D>().enabled = true;
       stuckKnife.SetStuck();
-
       stuckKnife.ShrinkColliderToVisiblePart();
     }
   }
@@ -149,9 +140,7 @@ public class GameController : MonoBehaviour
   void SpawnApples(LevelConfig config)
   {
     if (targetTransform == null) return;
-
     int appleCount = Random.Range(config.minApples, config.maxApples + 1);
-    // Apple spawning placeholder - requires apple prefab
   }
 
   void SpawnKnife()
