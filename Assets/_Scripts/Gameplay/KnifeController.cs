@@ -90,6 +90,7 @@ public class Knife : MonoBehaviour
       {
         State = KnifeState.Falling;
         GameManager.Instance.SetState(GameState.Lost);
+        SoundManager.Instance?.PlayKnifeMiss();
         controller?.OnKnifeMissed();
       }
       else if (other.CompareTag("Target"))

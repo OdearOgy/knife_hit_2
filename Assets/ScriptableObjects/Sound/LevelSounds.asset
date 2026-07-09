@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8ac1af2ed46402b8d3b30960bb6682, type: 3}
+  m_Name: LevelSounds
+  m_EditorClassIdentifier: Assembly-CSharp::SoundLibrary
+  targetHit: {fileID: 8300000, guid: bae0758b82c9443b0bde4362bf193943, type: 3}
+  knifeMiss: {fileID: 8300000, guid: 6e70e405e7f5149d78c1126915aaa8a6, type: 3}
+  knifeThrow: {fileID: 0}
