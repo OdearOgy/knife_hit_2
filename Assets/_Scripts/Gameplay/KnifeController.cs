@@ -30,6 +30,13 @@ public class Knife : MonoBehaviour
 
   void Awake()
   {
+    ParticleSystem ps = GetComponentInChildren<ParticleSystem>();
+    if (ps != null)
+    {
+      ps.playOnAwake = false;
+      ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+    }
+
     Collider2D col = GetComponent<Collider2D>();
     if (col is BoxCollider2D box)
     {
@@ -135,8 +142,12 @@ public class Knife : MonoBehaviour
   private void PlayClashParticles()
   {
     ParticleSystem ps = GetComponentInChildren<ParticleSystem>();
-    if (ps != null)
-      ps.Play();
+    if (ps == null) return;
+
+    GameObject spawned = Instantiate(ps.gameObject, ps.transform.position, Quaternion.identity);
+    spawned.transform.SetParent(null);
+    spawned.GetComponent<ParticleSystem>()?.Play();
+    Destroy(spawned, 1f);
   }
 
   private void Stick(Transform target)
