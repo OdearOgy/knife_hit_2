@@ -12,4 +12,7 @@ public class SoundLibrary : ScriptableObject
 
   [Header("Knife throw sound")]
   public AudioClip knifeThrow;
+
+  [Header("Log Breaking sound")]
+  public AudioClip logBreaking;
 }

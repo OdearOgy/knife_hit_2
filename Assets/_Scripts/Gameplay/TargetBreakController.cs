@@ -79,6 +79,7 @@ public class TargetBreakController : MonoBehaviour
 
   private IEnumerator BreakRoutine()
   {
+    SoundManager.Instance?.PlayTargetBreak();
 
     // Hide only the brown circle intact sprite
     if (intactSprite != null)
