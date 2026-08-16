@@ -15,7 +15,6 @@ public class TargetBreakController : MonoBehaviour
   [SerializeField] private float gravityScale = 1.5f;
 
   [Header("Timing")]
-  [SerializeField] private float breakDelay = 0.1f;
   [SerializeField] private float fadeDuration = 1.5f;
 
   private List<SpriteRenderer> fragmentRenderers = new List<SpriteRenderer>();
@@ -80,7 +79,6 @@ public class TargetBreakController : MonoBehaviour
 
   private IEnumerator BreakRoutine()
   {
-    // yield return new WaitForSeconds(breakDelay);
 
     // Hide only the brown circle intact sprite
     if (intactSprite != null)
@@ -99,6 +97,34 @@ public class TargetBreakController : MonoBehaviour
       fragmentRoot.SetParent(null);
       fragmentRoot.position = worldPos;
       fragmentRoot.rotation = worldRot;
+    }
+
+    // Release stuck knives and let them fall
+    Transform knifeHolder = transform.Find("KnifeHolder");
+    if (knifeHolder != null)
+    {
+      List<Transform> stuckKnives = new List<Transform>();
+      foreach (Transform child in knifeHolder)
+        stuckKnives.Add(child);
+
+      foreach (var knife in stuckKnives)
+      {
+        knife.SetParent(null);
+        Rigidbody2D rb = knife.GetComponent<Rigidbody2D>();
+        if (rb == null) rb = knife.gameObject.AddComponent<Rigidbody2D>();
+
+        rb.isKinematic = false;
+        rb.simulated = true;
+        rb.gravityScale = gravityScale * 0.5f;
+        rb.constraints = RigidbodyConstraints2D.None;
+        rb.WakeUp();
+
+        rb.angularDamping = 0f;
+        rb.angularVelocity = Random.Range(90f, 180f) * (Random.value > 0.5f ? 1f : -1f);
+
+        Vector2 dir = new Vector2(Random.Range(-0.8f, 0.8f), Random.Range(0.3f, 1.2f)).normalized;
+        rb.AddForce(dir * explosionForce * 0.5f, ForceMode2D.Impulse);
+      }
     }
 
     // Enable physics and launch each fragment

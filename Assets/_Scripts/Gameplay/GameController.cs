@@ -53,11 +53,9 @@ public class GameController : MonoBehaviour
 
   IEnumerator WinLevelAfterDelay()
   {
-    yield return new WaitForSeconds(0.3f);
-
     targetTransform?.GetComponent<TargetBreakController>()?.Break();
 
-    yield return new WaitForSeconds(1.5f);
+    yield return new WaitForSeconds(1.2f);
 
     if (LevelManager.Instance != null)
     {
