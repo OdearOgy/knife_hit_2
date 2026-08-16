@@ -99,6 +99,8 @@ public class Knife : MonoBehaviour
         GameManager.Instance.SetState(GameState.Lost);
         SoundManager.Instance?.PlayKnifeMiss();
         PlayClashParticles();
+        PlayClashSplash();
+        ScreenDimmer.Instance?.Flash();
         controller?.OnKnifeMissed();
       }
       else if (other.CompareTag("Target"))
@@ -148,6 +150,40 @@ public class Knife : MonoBehaviour
     spawned.transform.SetParent(null);
     spawned.GetComponent<ParticleSystem>()?.Play();
     Destroy(spawned, 1f);
+  }
+
+  private void PlayClashSplash()
+  {
+    Transform splashTemplate = transform.Find("ClashSplash");
+    if (splashTemplate == null) return;
+
+    GameObject spawned = Instantiate(splashTemplate.gameObject, splashTemplate.position, Quaternion.identity);
+    spawned.transform.SetParent(null);
+    spawned.SetActive(true);
+    StartCoroutine(AnimateSplash(spawned.GetComponent<SpriteRenderer>()));
+  }
+
+  private System.Collections.IEnumerator AnimateSplash(SpriteRenderer sr)
+  {
+    if (sr == null) yield break;
+
+    Transform t = sr.transform;
+    t.localScale = Vector3.one * 1.0f;
+
+    Color startColor = new Color(1f, 1f, 1f, 0.45f);
+    Color endColor = new Color(1f, 1f, 1f, 0.12f);
+
+    float duration = 0.04f;
+    float elapsed = 0f;
+
+    while (elapsed < duration)
+    {
+      sr.color = Color.Lerp(startColor, endColor, elapsed / duration);
+      elapsed += Time.deltaTime;
+      yield return null;
+    }
+
+    Destroy(sr.gameObject);
   }
 
   private void Stick(Transform target)
