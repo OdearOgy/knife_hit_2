@@ -30,6 +30,13 @@ public class Knife : MonoBehaviour
 
   void Awake()
   {
+    ParticleSystem ps = GetComponentInChildren<ParticleSystem>();
+    if (ps != null)
+    {
+      ps.playOnAwake = false;
+      ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+    }
+
     Collider2D col = GetComponent<Collider2D>();
     if (col is BoxCollider2D box)
     {
@@ -91,6 +98,9 @@ public class Knife : MonoBehaviour
         State = KnifeState.Falling;
         GameManager.Instance.SetState(GameState.Lost);
         SoundManager.Instance?.PlayKnifeMiss();
+        PlayClashParticles();
+        PlayClashSplash();
+        ScreenDimmer.Instance?.Flash();
         controller?.OnKnifeMissed();
       }
       else if (other.CompareTag("Target"))
@@ -129,6 +139,51 @@ public class Knife : MonoBehaviour
   public void SetStuck()
   {
     State = KnifeState.Stuck;
+  }
+
+  private void PlayClashParticles()
+  {
+    ParticleSystem ps = GetComponentInChildren<ParticleSystem>();
+    if (ps == null) return;
+
+    GameObject spawned = Instantiate(ps.gameObject, ps.transform.position, Quaternion.identity);
+    spawned.transform.SetParent(null);
+    spawned.GetComponent<ParticleSystem>()?.Play();
+    Destroy(spawned, 1f);
+  }
+
+  private void PlayClashSplash()
+  {
+    Transform splashTemplate = transform.Find("ClashSplash");
+    if (splashTemplate == null) return;
+
+    GameObject spawned = Instantiate(splashTemplate.gameObject, splashTemplate.position, Quaternion.identity);
+    spawned.transform.SetParent(null);
+    spawned.SetActive(true);
+    StartCoroutine(AnimateSplash(spawned.GetComponent<SpriteRenderer>()));
+  }
+
+  private System.Collections.IEnumerator AnimateSplash(SpriteRenderer sr)
+  {
+    if (sr == null) yield break;
+
+    Transform t = sr.transform;
+    t.localScale = Vector3.one * 1.0f;
+
+    Color startColor = new Color(1f, 1f, 1f, 0.45f);
+    Color endColor = new Color(1f, 1f, 1f, 0.12f);
+
+    float duration = 0.04f;
+    float elapsed = 0f;
+
+    while (elapsed < duration)
+    {
+      sr.color = Color.Lerp(startColor, endColor, elapsed / duration);
+      elapsed += Time.deltaTime;
+      yield return null;
+    }
+
+    Destroy(sr.gameObject);
   }
 
   private void Stick(Transform target)
