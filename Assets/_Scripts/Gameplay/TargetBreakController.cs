@@ -120,7 +120,7 @@ public class TargetBreakController : MonoBehaviour
         rb.constraints = RigidbodyConstraints2D.None;
         rb.WakeUp();
 
-        rb.angularDamping = 0f;
+        rb.angularDrag = 0f;
         rb.angularVelocity = Random.Range(90f, 180f) * (Random.value > 0.5f ? 1f : -1f);
 
         Vector2 dir = new Vector2(Random.Range(-0.8f, 0.8f), Random.Range(0.3f, 1.2f)).normalized;
@@ -143,6 +143,8 @@ public class TargetBreakController : MonoBehaviour
 
       rb.AddForce(dir * explosionForce, ForceMode2D.Impulse);
       rb.AddTorque(Random.Range(-torqueForce, torqueForce), ForceMode2D.Impulse);
+
+      StartCoroutine(Spin3D(rb.transform));
     }
 
     // Fade out fragments
@@ -166,5 +168,20 @@ public class TargetBreakController : MonoBehaviour
     // Cleanup
     if (fragmentRoot != null)
       Destroy(fragmentRoot.gameObject);
+  }
+
+  private IEnumerator Spin3D(Transform t)
+  {
+    if (t == null) yield break;
+
+    float speedX = Random.Range(-200f, 200f);
+    float speedY = Random.Range(-200f, 200f);
+    float speedZ = Random.Range(-100f, 100f);
+
+    while (t != null)
+    {
+      t.Rotate(speedX * Time.deltaTime, speedY * Time.deltaTime, speedZ * Time.deltaTime);
+      yield return null;
+    }
   }
 }

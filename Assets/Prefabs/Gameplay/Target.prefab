@@ -383,7 +383,6 @@ MonoBehaviour:
   upwardBias: 2.5
   torqueForce: 7
   gravityScale: 7
-  breakDelay: 0
   fadeDuration: 2
 --- !u!1001 &8581455879642168462
 PrefabInstance:
@@ -444,6 +443,18 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: f0e7ef812476fd0439f880138f50d847, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7219076460700332019, guid: f0e7ef812476fd0439f880138f50d847, type: 3}
+      propertyPath: m_LocalScale.z
+      value: -500
+      objectReference: {fileID: 0}
+    - target: {fileID: -6362509722343219229, guid: f0e7ef812476fd0439f880138f50d847, type: 3}
+      propertyPath: m_LocalScale.z
+      value: -500
+      objectReference: {fileID: 0}
+    - target: {fileID: -5894863403822994359, guid: f0e7ef812476fd0439f880138f50d847, type: 3}
+      propertyPath: m_LocalScale.z
+      value: -500
       objectReference: {fileID: 0}
     - target: {fileID: -3756473180518285571, guid: f0e7ef812476fd0439f880138f50d847, type: 3}
       propertyPath: m_IsActive
