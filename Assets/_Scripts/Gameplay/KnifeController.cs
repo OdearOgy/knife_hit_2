@@ -91,6 +91,7 @@ public class Knife : MonoBehaviour
         State = KnifeState.Falling;
         GameManager.Instance.SetState(GameState.Lost);
         SoundManager.Instance?.PlayKnifeMiss();
+        PlayClashParticles();
         controller?.OnKnifeMissed();
       }
       else if (other.CompareTag("Target"))
@@ -129,6 +130,13 @@ public class Knife : MonoBehaviour
   public void SetStuck()
   {
     State = KnifeState.Stuck;
+  }
+
+  private void PlayClashParticles()
+  {
+    ParticleSystem ps = GetComponentInChildren<ParticleSystem>();
+    if (ps != null)
+      ps.Play();
   }
 
   private void Stick(Transform target)
