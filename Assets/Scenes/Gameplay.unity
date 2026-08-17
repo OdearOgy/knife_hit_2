@@ -536,29 +536,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 498080988}
     m_Modifications:
-    - target: {fileID: 15835784386830145, guid: cf861cbe7d57d480f946f0e4cf1b9153, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 3602545286367978276, guid: cf861cbe7d57d480f946f0e4cf1b9153, type: 3}
       propertyPath: m_Name
       value: Target
-      objectReference: {fileID: 0}
-    - target: {fileID: 4188925923819432950, guid: cf861cbe7d57d480f946f0e4cf1b9153, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5127199560128273645, guid: cf861cbe7d57d480f946f0e4cf1b9153, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6029320519456866945, guid: cf861cbe7d57d480f946f0e4cf1b9153, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7189888094812080769, guid: cf861cbe7d57d480f946f0e4cf1b9153, type: 3}
-      propertyPath: m_Layer
-      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7192965323809283484, guid: cf861cbe7d57d480f946f0e4cf1b9153, type: 3}
       propertyPath: m_LocalPosition.x
@@ -599,14 +579,6 @@ PrefabInstance:
     - target: {fileID: 7192965323809283484, guid: cf861cbe7d57d480f946f0e4cf1b9153, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7632626795187084524, guid: cf861cbe7d57d480f946f0e4cf1b9153, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 8319772460799374632, guid: cf861cbe7d57d480f946f0e4cf1b9153, type: 3}
-      propertyPath: m_Layer
-      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
