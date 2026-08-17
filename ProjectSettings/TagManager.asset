@@ -47,5 +47,11 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: KnifeHolder
+    uniqueID: 1084468333
+    locked: 0
+  - name: Target
+    uniqueID: 1373620965
+    locked: 0
   m_RenderingLayers:
   - Default

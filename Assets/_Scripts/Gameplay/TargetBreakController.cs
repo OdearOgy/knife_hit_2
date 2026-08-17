@@ -120,7 +120,7 @@ public class TargetBreakController : MonoBehaviour
         rb.constraints = RigidbodyConstraints2D.None;
         rb.WakeUp();
 
-        rb.angularDrag = 0f;
+        rb.angularDamping = 0f;
         rb.angularVelocity = Random.Range(90f, 180f) * (Random.value > 0.5f ? 1f : -1f);
 
         Vector2 dir = new Vector2(Random.Range(-0.8f, 0.8f), Random.Range(0.3f, 1.2f)).normalized;

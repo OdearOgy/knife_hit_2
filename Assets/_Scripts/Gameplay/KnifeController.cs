@@ -190,7 +190,7 @@ public class Knife : MonoBehaviour
   {
     State = KnifeState.Stuck;
     transform.SetParent(target.Find("KnifeHolder"));
-    transform.position = new Vector3(transform.position.x, transform.position.y, -5f);
+    transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0.0f);
 
     // Shrink collider to only cover visible part
     ShrinkColliderToVisiblePart();

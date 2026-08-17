@@ -128,7 +128,7 @@ public class GameController : MonoBehaviour
       Vector3 positionOnCircle = new Vector3(
         Mathf.Cos(rad) * logRadius,
         Mathf.Sin(rad) * logRadius,
-        0
+        0.0f
       );
 
       Knife stuckKnife = Instantiate(knifePrefab, knifeHolder);
@@ -148,10 +148,11 @@ public class GameController : MonoBehaviour
 
   void SpawnKnife()
   {
-    Vector3 initialSpawnPoint = spawnPoint.position - Vector3.up * spawnOffset;
+    Vector3 initialSpawnPoint = spawnPoint.localPosition - Vector3.up * spawnOffset;
     currentKnife = Instantiate(knifePrefab, initialSpawnPoint, Quaternion.identity);
     currentKnife.SetController(this);
-    currentKnife.Prepare(spawnPoint.position, slideInSpeed);
+
+    currentKnife.Prepare(spawnPoint.localPosition, slideInSpeed);
   }
 
   void ThrowKnife()
