@@ -40,6 +40,7 @@ public class SoundManager : MonoBehaviour
   }
 
   public void PlayTargetHit() => PlaySFX(library?.targetHit);
+  public void PlayTargetBreak() => PlaySFX(library?.logBreaking);
   public void PlayKnifeMiss() => PlaySFX(library?.knifeMiss);
   public void PlayKnifeThrow() => PlaySFX(library?.knifeThrow);
 }

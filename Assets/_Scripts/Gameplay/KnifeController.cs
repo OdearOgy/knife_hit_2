@@ -190,7 +190,17 @@ public class Knife : MonoBehaviour
   {
     State = KnifeState.Stuck;
     transform.SetParent(target.Find("KnifeHolder"));
-    transform.position = new Vector3(transform.position.x, transform.position.y, -5f);
+
+    float radius = controller != null ? controller.LogRadius : 0.76f;
+    Vector2 localPos = new Vector2(transform.localPosition.x, transform.localPosition.y);
+    if (localPos.magnitude > 0.01f)
+    {
+      localPos = localPos.normalized * radius;
+    }
+
+    float angle = Mathf.Atan2(localPos.y, localPos.x) * Mathf.Rad2Deg;
+    transform.localRotation = Quaternion.Euler(0, 0, angle + 90f);
+    transform.localPosition = new Vector3(localPos.x, localPos.y, 0.0f);
 
     // Shrink collider to only cover visible part
     ShrinkColliderToVisiblePart();

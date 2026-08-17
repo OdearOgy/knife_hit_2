@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: da8627ce5de6748b5bf15c47138c01cf
+guid: b7eaacc6dc7fd49e68f6679993cc5028
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8524827877590128127
-    second: BasicKnife_0
+      213: -5314537187198650775
+    second: OrangeRedKnife_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 2
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -46,17 +46,17 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 0
   spriteMeshType: 0
-  alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
+  alignment: 9
+  spritePivot: {x: 0.49999997, y: 0.84785616}
   spritePixelsToUnits: 200
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: 60, y: 0, z: 57, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
-  spriteTessellationDetail: -1
+  spriteTessellationDetail: 0
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 256
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 2
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -126,33 +126,121 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BasicKnife_0
+      name: OrangeRedKnife_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 57
         y: 0
-        width: 68
-        height: 397
-      alignment: 9
-      pivot: {x: 0.49614614, y: 0.88296217}
+        width: 101
+        height: 922
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ff55b17c9c54e4670800000000000000
-      internalID: 8524827877590128127
+      spriteID: 966bb6bf598fe36b0800000000000000
+      internalID: -5314537187198650775
       vertices: []
       indices: 
       edges: []
       weights: []
-    outline: []
+    - serializedVersion: 2
+      name: OrangeRedKnife_1
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 252
+        width: 212
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0c98df0f33164d53b8cb27f1c4c616b
+      internalID: -1771146586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline:
+    - - {x: -51.5, y: 46}
+      - {x: -50.5, y: -88}
+      - {x: -51.5, y: -134}
+      - {x: -78.5, y: -130}
+      - {x: -97.5, y: -133}
+      - {x: -108.5, y: -147}
+      - {x: -106.5, y: -173}
+      - {x: -76.5, y: -182}
+      - {x: -44.5, y: -193}
+      - {x: -45.164368, y: -236.84818}
+      - {x: -46.312943, y: -312.65408}
+      - {x: -47.5, y: -391}
+      - {x: -46.5, y: -457}
+      - {x: 3.5, y: -461}
+      - {x: 53.5, y: -461}
+      - {x: 48.5, y: -393.9257}
+      - {x: 48.5, y: -316}
+      - {x: 49.5, y: -238}
+      - {x: 50.5, y: -205}
+      - {x: 57.5, y: -199}
+      - {x: 72.5, y: -200}
+      - {x: 98.5, y: -203}
+      - {x: 105.5, y: -191}
+      - {x: 108.5, y: -180}
+      - {x: 104.5, y: -159}
+      - {x: 95.5, y: -153}
+      - {x: 73.5, y: -150}
+      - {x: 51.5, y: -147}
+      - {x: 52.5, y: 8}
+      - {x: 47.5, y: 390}
+      - {x: 27.5, y: 433}
+      - {x: -11.5, y: 458}
+      - {x: -54.5, y: 461}
     customData: 
-    physicsShape: []
+    physicsShape:
+    - - {x: -51.5, y: 46}
+      - {x: -50.5, y: -88}
+      - {x: -51.5, y: -134}
+      - {x: -78.5, y: -130}
+      - {x: -97.5, y: -133}
+      - {x: -108.5, y: -147}
+      - {x: -106.5, y: -173}
+      - {x: -76.5, y: -182}
+      - {x: -44.5, y: -193}
+      - {x: -45.164368, y: -236.84818}
+      - {x: -46.312943, y: -312.65408}
+      - {x: -47.5, y: -391}
+      - {x: -48.5, y: -439}
+      - {x: 1.5, y: -437}
+      - {x: 48.5, y: -439}
+      - {x: 48.5, y: -393.9257}
+      - {x: 48.5, y: -316}
+      - {x: 49.5, y: -238}
+      - {x: 50.5, y: -205}
+      - {x: 57.5, y: -199}
+      - {x: 72.5, y: -200}
+      - {x: 98.5, y: -203}
+      - {x: 105.5, y: -191}
+      - {x: 108.5, y: -180}
+      - {x: 104.5, y: -159}
+      - {x: 95.5, y: -153}
+      - {x: 73.5, y: -150}
+      - {x: 51.5, y: -147}
+      - {x: 52.5, y: 8}
+      - {x: 47.5, y: 390}
+      - {x: 27.5, y: 433}
+      - {x: -11.5, y: 458}
+      - {x: -54.5, y: 461}
     bones: []
-    spriteID: 46320857ac5e848f5883f908a1903569
-    internalID: 0
+    spriteID: ebbcf3295a9a84ddda64781fdddb33eb
+    internalID: -1659948961
     vertices: []
     indices: 
     edges: []
@@ -161,7 +249,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      BasicKnife_0: 8524827877590128127
+      OrangeRedKnife_0: -5314537187198650775
+      OrangeRedKnife_1: -1771146586
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

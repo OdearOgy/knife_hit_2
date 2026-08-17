@@ -1,0 +1,187 @@
+using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+
+public class TargetBreakController : MonoBehaviour
+{
+  [Header("Visuals")]
+  [SerializeField] private SpriteRenderer intactSprite;
+  [SerializeField] private Transform fragmentRoot;
+
+  [Header("Physics")]
+  [SerializeField] private float explosionForce = 8f;
+  [SerializeField] private float upwardBias = 2f;
+  [SerializeField] private float torqueForce = 10f;
+  [SerializeField] private float gravityScale = 1.5f;
+
+  [Header("Timing")]
+  [SerializeField] private float fadeDuration = 1.5f;
+
+  private List<SpriteRenderer> fragmentRenderers = new List<SpriteRenderer>();
+  private List<Rigidbody2D> fragmentBodies = new List<Rigidbody2D>();
+  private bool hasBroken = false;
+
+  private void Awake()
+  {
+    if (intactSprite == null)
+    {
+      Transform logSprite = transform.Find("LogSprite");
+      if (logSprite != null)
+        intactSprite = logSprite.GetComponent<SpriteRenderer>();
+    }
+
+    if (fragmentRoot == null)
+    {
+      fragmentRoot = transform.Find("LogSprite/Akacia");
+      if (fragmentRoot == null)
+        fragmentRoot = transform.Find("Akacia");
+    }
+
+    CacheFragments();
+  }
+
+  private void CacheFragments()
+  {
+    if (fragmentRoot == null) return;
+
+    foreach (Transform child in fragmentRoot)
+    {
+      if (!child.gameObject.activeSelf) continue;
+
+      SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
+      if (sr == null) sr = child.GetComponentInChildren<SpriteRenderer>();
+
+      Rigidbody2D rb = child.GetComponent<Rigidbody2D>();
+      if (rb == null) rb = child.gameObject.AddComponent<Rigidbody2D>();
+
+      if (child.GetComponent<Collider2D>() == null && rb != null)
+        child.gameObject.AddComponent<BoxCollider2D>();
+
+      if (sr != null)
+        fragmentRenderers.Add(sr);
+
+      if (rb != null)
+      {
+        rb.gravityScale = 0f;
+        rb.isKinematic = true;
+        fragmentBodies.Add(rb);
+      }
+    }
+  }
+
+  public void Break()
+  {
+    if (hasBroken) return;
+    hasBroken = true;
+
+    StartCoroutine(BreakRoutine());
+  }
+
+  private IEnumerator BreakRoutine()
+  {
+    SoundManager.Instance?.PlayTargetBreak();
+
+    // Hide only the brown circle intact sprite
+    if (intactSprite != null)
+      intactSprite.enabled = false;
+
+    // Hide flash overlay too
+    Transform flashOverlay = transform.Find("FlashOverlay");
+    if (flashOverlay != null)
+      flashOverlay.gameObject.SetActive(false);
+
+    // Unparent the fragment root so it stops rotating with the target
+    if (fragmentRoot != null)
+    {
+      Vector3 worldPos = fragmentRoot.position;
+      Quaternion worldRot = fragmentRoot.rotation;
+      fragmentRoot.SetParent(null);
+      fragmentRoot.position = worldPos;
+      fragmentRoot.rotation = worldRot;
+    }
+
+    // Release stuck knives and let them fall
+    Transform knifeHolder = transform.Find("KnifeHolder");
+    if (knifeHolder != null)
+    {
+      List<Transform> stuckKnives = new List<Transform>();
+      foreach (Transform child in knifeHolder)
+        stuckKnives.Add(child);
+
+      foreach (var knife in stuckKnives)
+      {
+        knife.SetParent(null);
+        Rigidbody2D rb = knife.GetComponent<Rigidbody2D>();
+        if (rb == null) rb = knife.gameObject.AddComponent<Rigidbody2D>();
+
+        rb.isKinematic = false;
+        rb.simulated = true;
+        rb.gravityScale = gravityScale * 0.5f;
+        rb.constraints = RigidbodyConstraints2D.None;
+        rb.WakeUp();
+
+        rb.angularDamping = 0f;
+        rb.angularVelocity = Random.Range(90f, 180f) * (Random.value > 0.5f ? 1f : -1f);
+
+        Vector2 dir = new Vector2(Random.Range(-0.8f, 0.8f), Random.Range(0.3f, 1.2f)).normalized;
+        rb.AddForce(dir * explosionForce * 0.5f, ForceMode2D.Impulse);
+      }
+    }
+
+    // Enable physics and launch each fragment
+    for (int i = 0; i < fragmentBodies.Count; i++)
+    {
+      Rigidbody2D rb = fragmentBodies[i];
+      if (rb == null) continue;
+
+      rb.isKinematic = false;
+      rb.gravityScale = gravityScale;
+
+      Vector2 dir = (rb.transform.position - transform.position).normalized;
+      dir += Vector2.up * upwardBias * 0.3f;
+      dir.Normalize();
+
+      rb.AddForce(dir * explosionForce, ForceMode2D.Impulse);
+      rb.AddTorque(Random.Range(-torqueForce, torqueForce), ForceMode2D.Impulse);
+
+      StartCoroutine(Spin3D(rb.transform));
+    }
+
+    // Fade out fragments
+    float elapsed = 0f;
+    while (elapsed < fadeDuration)
+    {
+      float alpha = 1f - (elapsed / fadeDuration);
+      foreach (var sr in fragmentRenderers)
+      {
+        if (sr != null)
+        {
+          Color c = sr.color;
+          c.a = alpha;
+          sr.color = c;
+        }
+      }
+      elapsed += Time.deltaTime;
+      yield return null;
+    }
+
+    // Cleanup
+    if (fragmentRoot != null)
+      Destroy(fragmentRoot.gameObject);
+  }
+
+  private IEnumerator Spin3D(Transform t)
+  {
+    if (t == null) yield break;
+
+    float speedX = Random.Range(-200f, 200f);
+    float speedY = Random.Range(-200f, 200f);
+    float speedZ = Random.Range(-100f, 100f);
+
+    while (t != null)
+    {
+      t.Rotate(speedX * Time.deltaTime, speedY * Time.deltaTime, speedZ * Time.deltaTime);
+      yield return null;
+    }
+  }
+}
