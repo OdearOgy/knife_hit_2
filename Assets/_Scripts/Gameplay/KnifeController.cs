@@ -205,7 +205,7 @@ public class Knife : MonoBehaviour
     // Shrink collider to only cover visible part
     ShrinkColliderToVisiblePart();
 
-    target.GetComponent<TargetController>()?.OnHit();
+    target.GetComponent<TargetController>()?.OnHit(transform.position);
 
     controller?.OnSpawnKnife();
   }

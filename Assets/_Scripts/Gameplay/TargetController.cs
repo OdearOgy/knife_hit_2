@@ -22,6 +22,7 @@ public class TargetController : MonoBehaviour
   [SerializeField] private float nudgeDuration = 0.06f;
   [SerializeField] private float flashDuration = 0.1f;
   [SerializeField] private GameObject flashOverlay;
+  [SerializeField] private ParticleSystem hitParticles;
 
   private Vector3 basePosition;
 
@@ -85,11 +86,22 @@ public class TargetController : MonoBehaviour
     OnPopupComplete?.Invoke();
   }
 
-  public void OnHit()
+  public void OnHit(Vector3 hitPosition)
   {
     StartCoroutine(NudgeUp());
     StartCoroutine(FlashWhite());
+    PlayHitParticles(hitPosition);
     SoundManager.Instance?.PlayTargetHit();
+  }
+
+  private void PlayHitParticles(Vector3 hitPosition)
+  {
+    if (hitParticles == null) return;
+
+    GameObject spawned = Instantiate(hitParticles.gameObject, hitPosition, Quaternion.identity);
+    spawned.transform.SetParent(null);
+    spawned.GetComponent<ParticleSystem>()?.Play();
+    Destroy(spawned, 1f);
   }
 
   private IEnumerator NudgeUp()
