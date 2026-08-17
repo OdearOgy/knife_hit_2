@@ -110,7 +110,14 @@ public class TargetBreakController : MonoBehaviour
 
       foreach (var knife in stuckKnives)
       {
+        Vector3 worldScale = knife.lossyScale;
+        Vector3 worldPos = knife.position;
+        Quaternion worldRot = knife.rotation;
         knife.SetParent(null);
+        knife.localScale = worldScale;
+        knife.position = worldPos;
+        knife.rotation = worldRot;
+
         Rigidbody2D rb = knife.GetComponent<Rigidbody2D>();
         if (rb == null) rb = knife.gameObject.AddComponent<Rigidbody2D>();
 
