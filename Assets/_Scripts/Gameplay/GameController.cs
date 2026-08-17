@@ -12,6 +12,10 @@ public class GameController : MonoBehaviour
   [SerializeField] private Transform targetTransform;
   [SerializeField] private KnifeCountUI knifeCountUI;
 
+  [SerializeField] private float logRadius = 0.76f;
+  public float LogRadius => logRadius;
+
+
   private Knife currentKnife;
   private int knivesRemaining;
 
@@ -113,7 +117,7 @@ public class GameController : MonoBehaviour
     SpawnKnife();
   }
 
-  [SerializeField] private float logRadius = 1.5f;
+
   void SpawnStuckKnives(LevelConfig config)
   {
     if (config.stuckKnifeAngles == null || targetTransform == null) return;
