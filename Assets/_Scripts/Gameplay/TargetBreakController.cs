@@ -6,7 +6,6 @@ public class TargetBreakController : MonoBehaviour
 {
   [Header("Visuals")]
   [SerializeField] private SpriteRenderer intactSprite;
-  [SerializeField] private Transform fragmentRoot;
 
   [Header("Physics")]
   [SerializeField] private float explosionForce = 8f;
@@ -17,6 +16,7 @@ public class TargetBreakController : MonoBehaviour
   [Header("Timing")]
   [SerializeField] private float fadeDuration = 1.5f;
 
+  private List<GameObject> fragmentObjects = new List<GameObject>();
   private List<SpriteRenderer> fragmentRenderers = new List<SpriteRenderer>();
   private List<Rigidbody2D> fragmentBodies = new List<Rigidbody2D>();
   private bool hasBroken = false;
@@ -30,41 +30,40 @@ public class TargetBreakController : MonoBehaviour
         intactSprite = logSprite.GetComponent<SpriteRenderer>();
     }
 
-    if (fragmentRoot == null)
-    {
-      fragmentRoot = transform.Find("LogSprite/Akacia");
-      if (fragmentRoot == null)
-        fragmentRoot = transform.Find("Akacia");
-    }
-
     CacheFragments();
   }
 
   private void CacheFragments()
   {
-    if (fragmentRoot == null) return;
-
-    foreach (Transform child in fragmentRoot)
+    GameObject[] tagged = GameObject.FindGameObjectsWithTag("LogMaterial");
+    foreach (GameObject go in tagged)
     {
-      if (!child.gameObject.activeSelf) continue;
+      if (!go.activeSelf) continue;
 
-      SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
-      if (sr == null) sr = child.GetComponentInChildren<SpriteRenderer>();
-
-      Rigidbody2D rb = child.GetComponent<Rigidbody2D>();
-      if (rb == null) rb = child.gameObject.AddComponent<Rigidbody2D>();
-
-      if (child.GetComponent<Collider2D>() == null && rb != null)
-        child.gameObject.AddComponent<BoxCollider2D>();
-
-      if (sr != null)
-        fragmentRenderers.Add(sr);
-
-      if (rb != null)
+      foreach (Transform child in go.transform)
       {
-        rb.gravityScale = 0f;
-        rb.isKinematic = true;
-        fragmentBodies.Add(rb);
+        if (!child.gameObject.activeSelf) continue;
+
+        SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
+        if (sr == null) sr = child.GetComponentInChildren<SpriteRenderer>();
+
+        Rigidbody2D rb = child.GetComponent<Rigidbody2D>();
+        if (rb == null) rb = child.gameObject.AddComponent<Rigidbody2D>();
+
+        if (child.GetComponent<Collider2D>() == null && rb != null)
+          child.gameObject.AddComponent<BoxCollider2D>();
+
+        if (sr != null)
+          fragmentRenderers.Add(sr);
+
+        if (rb != null)
+        {
+          rb.gravityScale = 0f;
+          rb.isKinematic = true;
+          fragmentBodies.Add(rb);
+        }
+
+        fragmentObjects.Add(child.gameObject);
       }
     }
   }
@@ -90,14 +89,15 @@ public class TargetBreakController : MonoBehaviour
     if (flashOverlay != null)
       flashOverlay.gameObject.SetActive(false);
 
-    // Unparent the fragment root so it stops rotating with the target
-    if (fragmentRoot != null)
+    // Unparent each fragment so it stops rotating with the target
+    foreach (GameObject go in fragmentObjects)
     {
-      Vector3 worldPos = fragmentRoot.position;
-      Quaternion worldRot = fragmentRoot.rotation;
-      fragmentRoot.SetParent(null);
-      fragmentRoot.position = worldPos;
-      fragmentRoot.rotation = worldRot;
+      Transform t = go.transform;
+      Vector3 worldPos = t.position;
+      Quaternion worldRot = t.rotation;
+      t.SetParent(null);
+      t.position = worldPos;
+      t.rotation = worldRot;
     }
 
     // Release stuck knives and let them fall
@@ -166,8 +166,11 @@ public class TargetBreakController : MonoBehaviour
     }
 
     // Cleanup
-    if (fragmentRoot != null)
-      Destroy(fragmentRoot.gameObject);
+    foreach (GameObject go in fragmentObjects)
+    {
+      if (go != null)
+        Destroy(go);
+    }
   }
 
   private IEnumerator Spin3D(Transform t)
