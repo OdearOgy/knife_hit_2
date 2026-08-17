@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6349329635471843341}
   - component: {fileID: 4274811091557327554}
   - component: {fileID: 4669807574431679907}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Target
   m_TagString: Target
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7965494324106545260}
   - component: {fileID: 3478493733818498141}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: FlashOverlay
   m_TagString: TargetSprite
   m_Icon: {fileID: 0}
@@ -211,7 +211,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5608584207026632026}
   - component: {fileID: 7321736354470878799}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: KnifeHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -302,7 +302,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2259823417825397358}
   - component: {fileID: 3970144937132692855}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: LogSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -460,9 +460,25 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 500
       objectReference: {fileID: 0}
+    - target: {fileID: -3756473180518285571, guid: f0e7ef812476fd0439f880138f50d847, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -1025663018108745142, guid: f0e7ef812476fd0439f880138f50d847, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f0e7ef812476fd0439f880138f50d847, type: 3}
       propertyPath: m_Name
       value: Akacia
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f0e7ef812476fd0439f880138f50d847, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2891746525080496957, guid: f0e7ef812476fd0439f880138f50d847, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

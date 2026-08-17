@@ -7,10 +7,20 @@ public class GameController : MonoBehaviour
   [SerializeField] private float slideInSpeed = 25f;
   [SerializeField] private float spawnOffset = 2.5f;
 
+  [SerializeField] private PlayerConfig playerConfig;
   [SerializeField] private Knife knifePrefab;
   [SerializeField] private Transform spawnPoint;
   [SerializeField] private Transform targetTransform;
   [SerializeField] private KnifeCountUI knifeCountUI;
+
+  private Knife KnifePrefab => playerConfig != null && playerConfig.playerKnife != null
+    ? playerConfig.playerKnife
+    : knifePrefab;
+
+  private Knife DefaultKnifePrefab => playerConfig != null && playerConfig.defaultKnife != null
+    ? playerConfig.defaultKnife
+    : knifePrefab;
+
 
   [SerializeField] private float logRadius = 0.76f;
   public float LogRadius => logRadius;
@@ -135,7 +145,7 @@ public class GameController : MonoBehaviour
         0.0f
       );
 
-      Knife stuckKnife = Instantiate(knifePrefab, knifeHolder);
+      Knife stuckKnife = Instantiate(DefaultKnifePrefab, knifeHolder);
       stuckKnife.transform.localPosition = positionOnCircle;
       stuckKnife.transform.localRotation = Quaternion.Euler(0, 0, angle + 90f);
       stuckKnife.GetComponent<Collider2D>().enabled = true;
@@ -153,7 +163,7 @@ public class GameController : MonoBehaviour
   void SpawnKnife()
   {
     Vector3 initialSpawnPoint = spawnPoint.localPosition - Vector3.up * spawnOffset;
-    currentKnife = Instantiate(knifePrefab, initialSpawnPoint, Quaternion.identity);
+    currentKnife = Instantiate(KnifePrefab, initialSpawnPoint, Quaternion.identity);
     currentKnife.SetController(this);
 
     currentKnife.Prepare(spawnPoint.localPosition, slideInSpeed);
