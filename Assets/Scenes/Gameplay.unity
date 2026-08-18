@@ -256,7 +256,7 @@ MonoBehaviour:
   playerConfig: {fileID: 11400000, guid: 25c8656d54a594d7592265abd7c7e15b, type: 2}
   knifePrefab: {fileID: 7621742913313600164, guid: 79e95462050bd4d97b09220c280ca18d, type: 3}
   spawnPoint: {fileID: 125606151}
-  targetTransform: {fileID: 0}
+  targetTransform: {fileID: 266884652}
   knifeCountUI: {fileID: 757211336}
   logRadius: 0.76
 --- !u!1 &499259569

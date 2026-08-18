@@ -20,7 +20,7 @@ MonoBehaviour:
   - 270
   minApples: 0
   maxApples: 4
-  rotationSpeed: 100
+  rotationSpeed: 155
   clockwise: 0
   changesDirection: 1
   targetSprite: {fileID: 0}
