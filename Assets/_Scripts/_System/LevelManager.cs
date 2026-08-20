@@ -31,7 +31,6 @@ public class LevelManager : MonoBehaviour
       return;
     }
     Instance = this;
-    currentLevelIndex = 0;
     DontDestroyOnLoad(gameObject);
   }
 
