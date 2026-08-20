@@ -15,4 +15,11 @@ public class SoundLibrary : ScriptableObject
 
   [Header("Log Breaking sound")]
   public AudioClip logBreaking;
+
+  [Header("Boss win sound")]
+  public AudioClip bossBreaking;
+
+  [Header("Boss hit sound")]
+  public AudioClip bossHit;
+
 }

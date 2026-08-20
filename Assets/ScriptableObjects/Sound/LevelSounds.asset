@@ -16,3 +16,5 @@ MonoBehaviour:
   knifeMiss: {fileID: 8300000, guid: 6e70e405e7f5149d78c1126915aaa8a6, type: 3}
   knifeThrow: {fileID: 8300000, guid: bae0758b82c9443b0bde4362bf193943, type: 3}
   logBreaking: {fileID: 8300000, guid: 61e08a5819f61435994d005404012ccd, type: 3}
+  bossBreaking: {fileID: 8300000, guid: 45e9a9afbdf36427db6c00d8aa735237, type: 3}
+  bossHit: {fileID: 8300000, guid: b416e26dd36874196b7b7f87e5ce8d6e, type: 3}

@@ -94,7 +94,7 @@ public class TargetBreakController : MonoBehaviour
 
   private IEnumerator BreakBoss()
   {
-    SoundManager.Instance?.PlayTargetBreak();
+    SoundManager.Instance?.PlayBossBreak();
 
     Transform bossSprite = transform.Find("BossSprite/Boss");
     if (bossSprite != null)

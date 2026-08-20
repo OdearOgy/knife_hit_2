@@ -91,7 +91,11 @@ public class TargetController : MonoBehaviour
     StartCoroutine(NudgeUp());
     StartCoroutine(FlashWhite());
     PlayHitParticles(hitPosition);
-    SoundManager.Instance?.PlayTargetHit();
+
+    if (transform.Find("BossSprite") != null)
+      SoundManager.Instance?.PlayBossHit();
+    else
+      SoundManager.Instance?.PlayTargetHit();
   }
 
   private void PlayHitParticles(Vector3 hitPosition)
