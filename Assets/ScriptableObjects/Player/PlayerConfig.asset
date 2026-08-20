@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerConfig
   defaultKnife: {fileID: 2245531940853802940, guid: 06a7b1e35c6dc4767a0d8ac1a484d3d0, type: 3}
   playerKnife: {fileID: 8878662841844642063, guid: 0a303c0c193ce42acb12efeb2eda94e9, type: 3}
+  forcedLevel: {fileID: 0}
