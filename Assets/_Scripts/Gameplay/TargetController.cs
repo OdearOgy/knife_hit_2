@@ -3,11 +3,11 @@ using System.Collections;
 
 public class TargetController : MonoBehaviour
 {
-  [SerializeField] private float rotationSpeed = 50f;
-  [SerializeField] private bool isClockwise = true;
+  private float rotationSpeed = 50f;
+  private bool isClockwise = true;
 
 
-  private float currentSpeed = 0f;
+  private float currentSpeed = 20f;
   private float targetSpeed;
   private float directionMultiplier => isClockwise ? -1f : 1f;
 
@@ -22,6 +22,7 @@ public class TargetController : MonoBehaviour
   [SerializeField] private float nudgeDuration = 0.06f;
   [SerializeField] private float flashDuration = 0.1f;
   [SerializeField] private GameObject flashOverlay;
+  [SerializeField] private ParticleSystem hitParticles;
 
   private Vector3 basePosition;
 
@@ -29,11 +30,11 @@ public class TargetController : MonoBehaviour
   {
     originalScale = transform.localScale;
     transform.localScale = Vector3.zero;
-    basePosition = transform.position;
   }
 
   void Start()
   {
+    basePosition = transform.localPosition;
     var config = LevelManager.Instance?.CurrentLevel;
     if (config != null)
     {
@@ -85,11 +86,26 @@ public class TargetController : MonoBehaviour
     OnPopupComplete?.Invoke();
   }
 
-  public void OnHit()
+  public void OnHit(Vector3 hitPosition)
   {
     StartCoroutine(NudgeUp());
     StartCoroutine(FlashWhite());
-    SoundManager.Instance?.PlayTargetHit();
+    PlayHitParticles(hitPosition);
+
+    if (transform.Find("BossSprite") != null)
+      SoundManager.Instance?.PlayBossHit();
+    else
+      SoundManager.Instance?.PlayTargetHit();
+  }
+
+  private void PlayHitParticles(Vector3 hitPosition)
+  {
+    if (hitParticles == null) return;
+
+    GameObject spawned = Instantiate(hitParticles.gameObject, hitPosition, Quaternion.identity);
+    spawned.transform.SetParent(null);
+    spawned.GetComponent<ParticleSystem>()?.Play();
+    Destroy(spawned, 1f);
   }
 
   private IEnumerator NudgeUp()

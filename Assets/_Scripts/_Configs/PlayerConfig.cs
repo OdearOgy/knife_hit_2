@@ -7,5 +7,8 @@ public class PlayerConfig : ScriptableObject
     public Knife defaultKnife;
     public Knife playerKnife;
 
+    [Header("Testing")]
+    public LevelConfig forcedLevel;
+
 
 }

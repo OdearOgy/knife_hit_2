@@ -6,7 +6,6 @@ public class TargetBreakController : MonoBehaviour
 {
   [Header("Visuals")]
   [SerializeField] private SpriteRenderer intactSprite;
-  [SerializeField] private Transform fragmentRoot;
 
   [Header("Physics")]
   [SerializeField] private float explosionForce = 8f;
@@ -17,6 +16,7 @@ public class TargetBreakController : MonoBehaviour
   [Header("Timing")]
   [SerializeField] private float fadeDuration = 1.5f;
 
+  private List<GameObject> fragmentObjects = new List<GameObject>();
   private List<SpriteRenderer> fragmentRenderers = new List<SpriteRenderer>();
   private List<Rigidbody2D> fragmentBodies = new List<Rigidbody2D>();
   private bool hasBroken = false;
@@ -26,45 +26,47 @@ public class TargetBreakController : MonoBehaviour
     if (intactSprite == null)
     {
       Transform logSprite = transform.Find("LogSprite");
+      if (logSprite == null) logSprite = transform.Find("BossSprite");
       if (logSprite != null)
         intactSprite = logSprite.GetComponent<SpriteRenderer>();
     }
 
-    if (fragmentRoot == null)
-    {
-      fragmentRoot = transform.Find("LogSprite/Akacia");
-      if (fragmentRoot == null)
-        fragmentRoot = transform.Find("Akacia");
-    }
-
-    CacheFragments();
+    if (intactSprite == null)
+      intactSprite = GetComponentInChildren<SpriteRenderer>(true);
   }
 
   private void CacheFragments()
   {
-    if (fragmentRoot == null) return;
+    fragmentObjects.Clear();
+    fragmentRenderers.Clear();
+    fragmentBodies.Clear();
 
-    foreach (Transform child in fragmentRoot)
+    GameObject[] tagged = GameObject.FindGameObjectsWithTag("LogMaterial");
+    foreach (GameObject go in tagged)
     {
-      if (!child.gameObject.activeSelf) continue;
+      if (!go.activeSelf) continue;
 
-      SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
-      if (sr == null) sr = child.GetComponentInChildren<SpriteRenderer>();
-
-      Rigidbody2D rb = child.GetComponent<Rigidbody2D>();
-      if (rb == null) rb = child.gameObject.AddComponent<Rigidbody2D>();
-
-      if (child.GetComponent<Collider2D>() == null && rb != null)
-        child.gameObject.AddComponent<BoxCollider2D>();
-
-      if (sr != null)
-        fragmentRenderers.Add(sr);
-
-      if (rb != null)
+      foreach (Transform child in go.transform)
       {
-        rb.gravityScale = 0f;
-        rb.isKinematic = true;
+        if (!child.gameObject.activeSelf) continue;
+
+        SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
+        if (sr == null) sr = child.GetComponentInChildren<SpriteRenderer>();
+
+        Rigidbody2D rb = child.GetComponent<Rigidbody2D>();
+        if (rb == null) rb = child.gameObject.AddComponent<Rigidbody2D>();
+
+        rb.bodyType = RigidbodyType2D.Dynamic;
+        rb.simulated = true;
+
+        if (child.GetComponent<Collider2D>() == null)
+          child.gameObject.AddComponent<BoxCollider2D>();
+
+        if (sr != null)
+          fragmentRenderers.Add(sr);
+
         fragmentBodies.Add(rb);
+        fragmentObjects.Add(child.gameObject);
       }
     }
   }
@@ -74,59 +76,114 @@ public class TargetBreakController : MonoBehaviour
     if (hasBroken) return;
     hasBroken = true;
 
-    StartCoroutine(BreakRoutine());
+    if (IsBoss())
+    {
+      StartCoroutine(BreakBoss());
+    }
+    else
+    {
+      CacheFragments();
+      StartCoroutine(BreakRoutine());
+    }
+  }
+
+  private bool IsBoss()
+  {
+    return transform.Find("BossSprite") != null;
+  }
+
+  private IEnumerator BreakBoss()
+  {
+    SoundManager.Instance?.PlayBossBreak();
+
+    Transform bossSprite = transform.Find("BossSprite/Boss");
+    if (bossSprite != null)
+      bossSprite.gameObject.SetActive(false);
+
+    Transform flashOverlay = transform.Find("FlashOverlay");
+    if (flashOverlay != null)
+      flashOverlay.gameObject.SetActive(false);
+
+    ReleaseStuckKnives();
+
+    Transform bossParticles = transform.Find("BossSprite/BossParticles");
+    if (bossParticles != null)
+    {
+      Vector3 worldPos = bossParticles.position;
+      Quaternion worldRot = bossParticles.rotation;
+      bossParticles.SetParent(null);
+      bossParticles.position = worldPos;
+      bossParticles.rotation = worldRot;
+
+      bossParticles.gameObject.SetActive(true);
+      ParticleSystem ps = bossParticles.GetComponent<ParticleSystem>();
+      if (ps != null) ps.Play();
+    }
+
+    yield return new WaitForSeconds(2f);
+  }
+
+  private void ReleaseStuckKnives()
+  {
+    Transform knifeHolder = transform.Find("KnifeHolder");
+    if (knifeHolder == null) return;
+
+    List<Transform> stuckKnives = new List<Transform>();
+    foreach (Transform child in knifeHolder)
+    {
+      stuckKnives.Add(child);
+    }
+
+    foreach (var knife in stuckKnives)
+    {
+      Vector3 worldScale = knife.lossyScale;
+      Vector3 worldPos = knife.position;
+      Quaternion worldRot = knife.rotation;
+      knife.SetParent(null);
+      knife.localScale = worldScale;
+      knife.position = worldPos;
+      knife.rotation = worldRot;
+
+      Rigidbody2D rb = knife.GetComponent<Rigidbody2D>();
+      if (rb == null) rb = knife.gameObject.AddComponent<Rigidbody2D>();
+
+      rb.isKinematic = false;
+      rb.simulated = true;
+      rb.gravityScale = gravityScale * 0.5f;
+      rb.constraints = RigidbodyConstraints2D.None;
+      rb.WakeUp();
+
+      rb.angularDamping = 0f;
+      rb.angularVelocity = Random.Range(90f, 180f) * (Random.value > 0.5f ? 1f : -1f);
+
+      Vector2 dir = new Vector2(Random.Range(-0.8f, 0.8f), Random.Range(0.3f, 1.2f)).normalized;
+      rb.AddForce(dir * explosionForce * 0.5f, ForceMode2D.Impulse);
+    }
   }
 
   private IEnumerator BreakRoutine()
   {
     SoundManager.Instance?.PlayTargetBreak();
 
-    // Hide only the brown circle intact sprite
     if (intactSprite != null)
       intactSprite.enabled = false;
 
-    // Hide flash overlay too
     Transform flashOverlay = transform.Find("FlashOverlay");
-    if (flashOverlay != null)
-      flashOverlay.gameObject.SetActive(false);
+    flashOverlay?.gameObject.SetActive(false);
 
-    // Unparent the fragment root so it stops rotating with the target
-    if (fragmentRoot != null)
+    yield return null;
+
+    foreach (GameObject go in fragmentObjects)
     {
-      Vector3 worldPos = fragmentRoot.position;
-      Quaternion worldRot = fragmentRoot.rotation;
-      fragmentRoot.SetParent(null);
-      fragmentRoot.position = worldPos;
-      fragmentRoot.rotation = worldRot;
+      Transform t = go.transform;
+      Vector3 worldPos = t.position;
+      Quaternion worldRot = t.rotation;
+      t.SetParent(null);
+      t.position = worldPos;
+      t.rotation = worldRot;
     }
 
-    // Release stuck knives and let them fall
-    Transform knifeHolder = transform.Find("KnifeHolder");
-    if (knifeHolder != null)
-    {
-      List<Transform> stuckKnives = new List<Transform>();
-      foreach (Transform child in knifeHolder)
-        stuckKnives.Add(child);
-
-      foreach (var knife in stuckKnives)
-      {
-        knife.SetParent(null);
-        Rigidbody2D rb = knife.GetComponent<Rigidbody2D>();
-        if (rb == null) rb = knife.gameObject.AddComponent<Rigidbody2D>();
-
-        rb.isKinematic = false;
-        rb.simulated = true;
-        rb.gravityScale = gravityScale * 0.5f;
-        rb.constraints = RigidbodyConstraints2D.None;
-        rb.WakeUp();
-
-        rb.angularDamping = 0f;
-        rb.angularVelocity = Random.Range(90f, 180f) * (Random.value > 0.5f ? 1f : -1f);
-
-        Vector2 dir = new Vector2(Random.Range(-0.8f, 0.8f), Random.Range(0.3f, 1.2f)).normalized;
-        rb.AddForce(dir * explosionForce * 0.5f, ForceMode2D.Impulse);
-      }
-    }
+    ReleaseStuckKnives();
 
     // Enable physics and launch each fragment
     for (int i = 0; i < fragmentBodies.Count; i++)
@@ -165,9 +222,11 @@ public class TargetBreakController : MonoBehaviour
       yield return null;
     }
 
-    // Cleanup
-    if (fragmentRoot != null)
-      Destroy(fragmentRoot.gameObject);
+    foreach (GameObject go in fragmentObjects)
+    {
+      if (go != null)
+        Destroy(go);
+    }
   }
 
   private IEnumerator Spin3D(Transform t)

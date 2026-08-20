@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af5215c61e7b745089a3b0c0fa079b4f, type: 3}
+  m_Name: 05-candy
+  m_EditorClassIdentifier: Assembly-CSharp::LevelConfig
+  levelNumber: 5
+  targetPrefab: {fileID: 1639335028401188925, guid: 123098a1314ca40ac9bb5c829ff6bdad, type: 3}
+  knivesToThrow: 8
+  minStuckKnives: 0
+  maxStuckKnives: 0
+  stuckKnifeAngles: []
+  minApples: 0
+  maxApples: 4
+  appleAngles:
+  - 0
+  - 45
+  - 90
+  - 180
+  rotationSpeed: 500
+  clockwise: 1
+  changesDirection: 0
+  directionChangeInterval: 0

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af5215c61e7b745089a3b0c0fa079b4f, type: 3}
+  m_Name: 05-tomato
+  m_EditorClassIdentifier: Assembly-CSharp::LevelConfig
+  levelNumber: 5
+  targetPrefab: {fileID: 5405768643961738726, guid: 32cf1964eb0b547cbb1aa9d4dcdc87d1, type: 3}
+  knivesToThrow: 12
+  minStuckKnives: 0
+  maxStuckKnives: 0
+  stuckKnifeAngles: []
+  minApples: 0
+  maxApples: 4
+  appleAngles:
+  - 20
+  - 40
+  - 60
+  - 80
+  rotationSpeed: 250
+  clockwise: 0
+  changesDirection: 0
+  directionChangeInterval: 0

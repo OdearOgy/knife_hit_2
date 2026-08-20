@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af5215c61e7b745089a3b0c0fa079b4f, type: 3}
+  m_Name: 05-cheese
+  m_EditorClassIdentifier: Assembly-CSharp::LevelConfig
+  levelNumber: 5
+  targetPrefab: {fileID: 2219989765700856283, guid: b0c3fe2e453c6498bab693c002048d87, type: 3}
+  knivesToThrow: 4
+  minStuckKnives: 0
+  maxStuckKnives: 3
+  stuckKnifeAngles:
+  - 0
+  - 20
+  - 40
+  - 60
+  minApples: 0
+  maxApples: 0
+  appleAngles: []
+  rotationSpeed: 200
+  clockwise: 1
+  changesDirection: 0
+  directionChangeInterval: 0
