@@ -1,16 +1,20 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using TMPro;
 
 public class GameController : MonoBehaviour
 {
-  [SerializeField] private float slideInSpeed = 25f;
-  [SerializeField] private float spawnOffset = 2.5f;
+  [SerializeField] private float slideInSpeed = 80f;
+  [SerializeField] private float knifeSpawnOffset = 1f;
+  [SerializeField] private float targetSpawnOffset = 1f;
 
   [SerializeField] private PlayerConfig playerConfig;
   [SerializeField] private Knife knifePrefab;
   [SerializeField] private Transform spawnPoint;
   [SerializeField] private KnifeCountUI knifeCountUI;
+  [SerializeField] private TextMeshProUGUI scoreText;
+  [SerializeField] private TextMeshProUGUI stageText;
 
   private Knife KnifePrefab => playerConfig != null && playerConfig.playerKnife != null
     ? playerConfig.playerKnife
@@ -47,6 +51,7 @@ public class GameController : MonoBehaviour
   {
     currentKnife = null;
     GameManager.Instance?.AddScore();
+    UpdateScoreUI();
 
     if (knivesRemaining == 0)
     {
@@ -105,7 +110,7 @@ public class GameController : MonoBehaviour
       if (config.targetPrefab != null)
       {
         currentTarget = Instantiate(config.targetPrefab, transform);
-        currentTarget.transform.localPosition = new Vector3(0f, 2f, 0f);
+        currentTarget.transform.localPosition = new Vector3(0f, targetSpawnOffset, 0f);
         currentTarget.transform.localRotation = Quaternion.identity;
         currentTarget.OnPopupComplete += () =>
         {
@@ -121,6 +126,17 @@ public class GameController : MonoBehaviour
     }
 
     SpawnKnife();
+    UpdateScoreUI();
+  }
+
+  void UpdateScoreUI()
+  {
+    Debug.Log($"[ScoreUI] CurrentScore={GameManager.Instance?.CurrentScore}");
+    if (scoreText != null && GameManager.Instance != null)
+      scoreText.text = GameManager.Instance.CurrentScore.ToString();
+
+    if (stageText != null && LevelManager.Instance?.CurrentLevel != null)
+      stageText.text = "Stage " + LevelManager.Instance.CurrentLevel.levelNumber;
   }
 
   void SpawnStuckKnives(LevelConfig config)
@@ -176,7 +192,7 @@ public class GameController : MonoBehaviour
 
   void SpawnKnife()
   {
-    Vector3 initialSpawnPoint = spawnPoint.localPosition - Vector3.up * spawnOffset;
+    Vector3 initialSpawnPoint = spawnPoint.localPosition - Vector3.up * knifeSpawnOffset;
     currentKnife = Instantiate(KnifePrefab, initialSpawnPoint, Quaternion.identity);
     currentKnife.SetController(this);
 

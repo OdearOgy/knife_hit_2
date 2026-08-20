@@ -66,5 +66,8 @@ public class GameManager : MonoBehaviour
   public void ResetScore()
   {
     CurrentScore = 0;
+    PlayerPrefs.DeleteKey("LastScore");
+    PlayerPrefs.DeleteKey("LastStage");
+    PlayerPrefs.Save();
   }
 }
