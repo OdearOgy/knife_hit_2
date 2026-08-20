@@ -165,17 +165,14 @@ public class TargetBreakController : MonoBehaviour
   {
     SoundManager.Instance?.PlayTargetBreak();
 
-    // Hide only the brown circle intact sprite
     if (intactSprite != null)
       intactSprite.enabled = false;
 
-    // Hide flash overlay too
     Transform flashOverlay = transform.Find("FlashOverlay");
     flashOverlay?.gameObject.SetActive(false);
 
     yield return null;
 
-    // Unparent each fragment so it stops rotating with the target
     foreach (GameObject go in fragmentObjects)
     {
       Transform t = go.transform;
@@ -225,7 +222,6 @@ public class TargetBreakController : MonoBehaviour
       yield return null;
     }
 
-    // Cleanup
     foreach (GameObject go in fragmentObjects)
     {
       if (go != null)
