@@ -6,6 +6,7 @@ public class LevelManager : MonoBehaviour
   public static LevelManager Instance { get; private set; }
 
   [SerializeField] private LevelConfig[] levels;
+  [SerializeField] private PlayerConfig playerConfig;
 
   private static int currentLevelIndex = 0;
 
@@ -13,6 +14,9 @@ public class LevelManager : MonoBehaviour
   {
     get
     {
+      if (playerConfig != null && playerConfig.forcedLevel != null)
+        return playerConfig.forcedLevel;
+
       var config = GetLevelConfig(currentLevelIndex);
       Debug.Log($"[LevelManager] CurrentLevel getter: level={currentLevelIndex + 1}, config={(config != null ? config.name : "NULL")}");
       return config;
@@ -47,6 +51,8 @@ public class LevelManager : MonoBehaviour
 
   public void LoadNextLevel()
   {
+    if (playerConfig != null && playerConfig.forcedLevel != null) return;
+
     int maxLevel = levels.Length > 0 ? levels.Max(l => l.levelNumber) : 0;
     if (maxLevel == 0) return;
 

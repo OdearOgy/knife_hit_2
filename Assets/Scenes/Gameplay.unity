@@ -194,11 +194,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13b291884ea6b41c9a1fd1c5a95938c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  normalLevels:
+  levels:
   - {fileID: 11400000, guid: b552354a0eae24641a7ffd5b33056708, type: 2}
-  bossLevel5: []
-  bossLevel10: []
-  bossLevel15: []
+  - {fileID: 11400000, guid: cd53099a3d691448abe64eec6cdd5c01, type: 2}
+  - {fileID: 11400000, guid: 3277fa7838ad4441fbd2f04a96b8a31c, type: 2}
+  - {fileID: 11400000, guid: dd6703529a2de4492ba6132df7ed0357, type: 2}
+  - {fileID: 11400000, guid: edb09e465e34948ebb1ee36500e747e9, type: 2}
 --- !u!1 &498080987
 GameObject:
   m_ObjectHideFlags: 0

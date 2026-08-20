@@ -26,9 +26,13 @@ public class TargetBreakController : MonoBehaviour
     if (intactSprite == null)
     {
       Transform logSprite = transform.Find("LogSprite");
+      if (logSprite == null) logSprite = transform.Find("BossSprite");
       if (logSprite != null)
         intactSprite = logSprite.GetComponent<SpriteRenderer>();
     }
+
+    if (intactSprite == null)
+      intactSprite = GetComponentInChildren<SpriteRenderer>(true);
   }
 
   private void CacheFragments()
@@ -72,8 +76,81 @@ public class TargetBreakController : MonoBehaviour
     if (hasBroken) return;
     hasBroken = true;
 
-    CacheFragments();
-    StartCoroutine(BreakRoutine());
+    if (IsBoss())
+    {
+      StartCoroutine(BreakBoss());
+    }
+    else
+    {
+      CacheFragments();
+      StartCoroutine(BreakRoutine());
+    }
+  }
+
+  private bool IsBoss()
+  {
+    return transform.Find("BossSprite") != null;
+  }
+
+  private IEnumerator BreakBoss()
+  {
+    SoundManager.Instance?.PlayTargetBreak();
+
+    Transform bossSprite = transform.Find("BossSprite/Boss");
+    if (bossSprite != null)
+      bossSprite.gameObject.SetActive(false);
+
+    Transform flashOverlay = transform.Find("FlashOverlay");
+    if (flashOverlay != null)
+      flashOverlay.gameObject.SetActive(false);
+
+    ReleaseStuckKnives();
+
+    Transform bossParticles = transform.Find("BossSprite/BossParticles");
+    if (bossParticles != null)
+    {
+      bossParticles.gameObject.SetActive(true);
+      ParticleSystem ps = bossParticles.GetComponent<ParticleSystem>();
+      if (ps != null) ps.Play();
+    }
+
+    yield return new WaitForSeconds(2f);
+  }
+
+  private void ReleaseStuckKnives()
+  {
+    Transform knifeHolder = transform.Find("KnifeHolder");
+    if (knifeHolder == null) return;
+
+    List<Transform> stuckKnives = new List<Transform>();
+    foreach (Transform child in knifeHolder)
+      stuckKnives.Add(child);
+
+    foreach (var knife in stuckKnives)
+    {
+      Vector3 worldScale = knife.lossyScale;
+      Vector3 worldPos = knife.position;
+      Quaternion worldRot = knife.rotation;
+      knife.SetParent(null);
+      knife.localScale = worldScale;
+      knife.position = worldPos;
+      knife.rotation = worldRot;
+
+      Rigidbody2D rb = knife.GetComponent<Rigidbody2D>();
+      if (rb == null) rb = knife.gameObject.AddComponent<Rigidbody2D>();
+
+      rb.isKinematic = false;
+      rb.simulated = true;
+      rb.gravityScale = gravityScale * 0.5f;
+      rb.constraints = RigidbodyConstraints2D.None;
+      rb.WakeUp();
+
+      rb.angularDamping = 0f;
+      rb.angularVelocity = Random.Range(90f, 180f) * (Random.value > 0.5f ? 1f : -1f);
+
+      Vector2 dir = new Vector2(Random.Range(-0.8f, 0.8f), Random.Range(0.3f, 1.2f)).normalized;
+      rb.AddForce(dir * explosionForce * 0.5f, ForceMode2D.Impulse);
+    }
   }
 
   private IEnumerator BreakRoutine()
@@ -102,40 +179,7 @@ public class TargetBreakController : MonoBehaviour
       t.rotation = worldRot;
     }
 
-    // Release stuck knives and let them fall
-    Transform knifeHolder = transform.Find("KnifeHolder");
-    if (knifeHolder != null)
-    {
-      List<Transform> stuckKnives = new List<Transform>();
-      foreach (Transform child in knifeHolder)
-        stuckKnives.Add(child);
-
-      foreach (var knife in stuckKnives)
-      {
-        Vector3 worldScale = knife.lossyScale;
-        Vector3 worldPos = knife.position;
-        Quaternion worldRot = knife.rotation;
-        knife.SetParent(null);
-        knife.localScale = worldScale;
-        knife.position = worldPos;
-        knife.rotation = worldRot;
-
-        Rigidbody2D rb = knife.GetComponent<Rigidbody2D>();
-        if (rb == null) rb = knife.gameObject.AddComponent<Rigidbody2D>();
-
-        rb.isKinematic = false;
-        rb.simulated = true;
-        rb.gravityScale = gravityScale * 0.5f;
-        rb.constraints = RigidbodyConstraints2D.None;
-        rb.WakeUp();
-
-        rb.angularDamping = 0f;
-        rb.angularVelocity = Random.Range(90f, 180f) * (Random.value > 0.5f ? 1f : -1f);
-
-        Vector2 dir = new Vector2(Random.Range(-0.8f, 0.8f), Random.Range(0.3f, 1.2f)).normalized;
-        rb.AddForce(dir * explosionForce * 0.5f, ForceMode2D.Impulse);
-      }
-    }
+    ReleaseStuckKnives();
 
     // Enable physics and launch each fragment
     for (int i = 0; i < fragmentBodies.Count; i++)
