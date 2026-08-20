@@ -1,29 +1,17 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using TMPro;
 
 public class GameOverController : MonoBehaviour
 {
-  [SerializeField] private Button restartButton;
-  [SerializeField] private Button homeButton;
+  [SerializeField] private TextMeshProUGUI scoreText;
+  [SerializeField] private TextMeshProUGUI stageText;
 
   void Start()
   {
-    if (restartButton != null)
-      restartButton.onClick.AddListener(OnRestart);
+    if (scoreText != null)
+      scoreText.text = PlayerPrefs.GetInt("LastScore", 0).ToString();
 
-    if (homeButton != null)
-      homeButton.onClick.AddListener(OnHome);
-  }
-
-  void OnRestart()
-  {
-    LevelManager.Instance?.RestartFromLevelOne();
-    SceneManager.LoadScene("Gameplay");
-  }
-
-  void OnHome()
-  {
-    SceneManager.LoadScene("MainMenu");
+    if (stageText != null)
+      stageText.text = "STAGE " + PlayerPrefs.GetInt("LastStage", 1);
   }
 }

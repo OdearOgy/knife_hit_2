@@ -25,7 +25,7 @@ MonoBehaviour:
   - 45
   - 90
   - 180
-  rotationSpeed: 500
+  rotationSpeed: 230
   clockwise: 1
   changesDirection: 0
   directionChangeInterval: 0
