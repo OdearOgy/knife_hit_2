@@ -9,6 +9,7 @@ public class GameSceneManager : MonoBehaviour
 
   public void RestartGameplay()
   {
+    GameManager.Instance?.ResetScore();
     LevelManager.Instance?.RestartFromLevelOne();
     SceneManager.LoadScene("Gameplay");
   }

@@ -46,6 +46,7 @@ public class GameController : MonoBehaviour
   public void OnSpawnKnife()
   {
     currentKnife = null;
+    GameManager.Instance?.AddScore();
 
     if (knivesRemaining == 0)
     {
@@ -65,6 +66,7 @@ public class GameController : MonoBehaviour
 
   IEnumerator WinLevelAfterDelay()
   {
+    GameManager.Instance?.SaveHighScore();
     currentTarget?.GetComponent<TargetBreakController>()?.Break();
 
     yield return new WaitForSeconds(1.2f);
@@ -78,6 +80,7 @@ public class GameController : MonoBehaviour
 
   IEnumerator GameOverAfterDelay()
   {
+    GameManager.Instance?.SaveHighScore();
     yield return new WaitForSeconds(1f);
     GameManager.Instance.SetState(GameState.Playing);
     SceneManager.LoadScene("GameOver");
