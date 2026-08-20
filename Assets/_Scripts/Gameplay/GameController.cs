@@ -135,8 +135,8 @@ public class GameController : MonoBehaviour
     if (scoreText != null && GameManager.Instance != null)
       scoreText.text = GameManager.Instance.CurrentScore.ToString();
 
-    if (stageText != null && LevelManager.Instance?.CurrentLevel != null)
-      stageText.text = "Stage " + LevelManager.Instance.CurrentLevel.levelNumber;
+    if (stageText != null && LevelManager.Instance != null)
+      stageText.text = "Stage " + LevelManager.Instance.StageNumber;
   }
 
   void SpawnStuckKnives(LevelConfig config)

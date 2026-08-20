@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
 
   public void SaveHighScore()
   {
-    int currentStage = LevelManager.Instance?.CurrentLevel?.levelNumber ?? 1;
+    int currentStage = LevelManager.Instance?.StageNumber ?? 1;
 
     if (CurrentScore > HighScore)
     {

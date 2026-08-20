@@ -25,7 +25,7 @@ MonoBehaviour:
   minApples: 0
   maxApples: 0
   appleAngles: []
-  rotationSpeed: 200
+  rotationSpeed: 190
   clockwise: 1
   changesDirection: 0
   directionChangeInterval: 0

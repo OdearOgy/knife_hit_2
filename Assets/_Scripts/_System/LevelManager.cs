@@ -9,6 +9,9 @@ public class LevelManager : MonoBehaviour
   [SerializeField] private PlayerConfig playerConfig;
 
   private static int currentLevelIndex = 0;
+  private static int stageNumber = 1;
+
+  public int StageNumber => stageNumber;
 
   public LevelConfig CurrentLevel
   {
@@ -53,15 +56,18 @@ public class LevelManager : MonoBehaviour
   {
     if (playerConfig != null && playerConfig.forcedLevel != null) return;
 
+    stageNumber++;
+
     int maxLevel = levels.Length > 0 ? levels.Max(l => l.levelNumber) : 0;
     if (maxLevel == 0) return;
 
     currentLevelIndex = (currentLevelIndex + 1) % maxLevel;
-    Debug.Log($"[LevelManager] Advanced to level index: {currentLevelIndex} (Level {currentLevelIndex + 1})");
+    Debug.Log($"[LevelManager] Stage {stageNumber}, level index: {currentLevelIndex}");
   }
 
   public void RestartFromLevelOne()
   {
     currentLevelIndex = 0;
+    stageNumber = 1;
   }
 }
