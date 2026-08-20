@@ -12,6 +12,6 @@ public class GameOverController : MonoBehaviour
       scoreText.text = PlayerPrefs.GetInt("LastScore", 0).ToString();
 
     if (stageText != null)
-      stageText.text = "Stage " + PlayerPrefs.GetInt("LastStage", 1);
+      stageText.text = "STAGE " + PlayerPrefs.GetInt("LastStage", 1);
   }
 }
