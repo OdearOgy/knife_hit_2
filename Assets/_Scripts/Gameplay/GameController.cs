@@ -10,7 +10,6 @@ public class GameController : MonoBehaviour
   [SerializeField] private PlayerConfig playerConfig;
   [SerializeField] private Knife knifePrefab;
   [SerializeField] private Transform spawnPoint;
-  [SerializeField] private Transform targetTransform;
   [SerializeField] private KnifeCountUI knifeCountUI;
 
   private Knife KnifePrefab => playerConfig != null && playerConfig.playerKnife != null
@@ -21,13 +20,12 @@ public class GameController : MonoBehaviour
     ? playerConfig.defaultKnife
     : knifePrefab;
 
-
   [SerializeField] private float logRadius = 0.76f;
   public float LogRadius => logRadius;
 
-
   private Knife currentKnife;
   private int knivesRemaining;
+  private TargetController currentTarget;
 
   private void OnEnable()
   {
@@ -67,7 +65,7 @@ public class GameController : MonoBehaviour
 
   IEnumerator WinLevelAfterDelay()
   {
-    targetTransform?.GetComponent<TargetBreakController>()?.Break();
+    currentTarget?.GetComponent<TargetBreakController>()?.Break();
 
     yield return new WaitForSeconds(1.2f);
 
@@ -94,28 +92,23 @@ public class GameController : MonoBehaviour
   void Start()
   {
     var config = LevelManager.Instance?.CurrentLevel;
+    Debug.Log(LevelManager.Instance);
 
     if (config != null)
     {
       knivesRemaining = config.knivesToThrow;
       knifeCountUI?.Setup(config.knivesToThrow);
 
-      if (targetTransform != null)
+      if (config.targetPrefab != null)
       {
-        TargetController targetController = targetTransform.GetComponent<TargetController>();
-        if (targetController != null)
-        {
-          targetController.OnPopupComplete += () =>
-          {
-            SpawnStuckKnives(config);
-            SpawnApples(config);
-          };
-        }
-        else
+        currentTarget = Instantiate(config.targetPrefab, transform);
+        currentTarget.transform.localPosition = new Vector3(0f, 2f, 0f);
+        currentTarget.transform.localRotation = Quaternion.identity;
+        currentTarget.OnPopupComplete += () =>
         {
           SpawnStuckKnives(config);
           SpawnApples(config);
-        }
+        };
       }
       else
       {
@@ -127,16 +120,17 @@ public class GameController : MonoBehaviour
     SpawnKnife();
   }
 
-
   void SpawnStuckKnives(LevelConfig config)
   {
-    if (config.stuckKnifeAngles == null || targetTransform == null) return;
+    if (config.stuckKnifeAngles == null || config.stuckKnifeAngles.Length == 0 || currentTarget == null) return;
 
-    Transform knifeHolder = targetTransform.Find("KnifeHolder");
+    Transform knifeHolder = currentTarget.transform.Find("KnifeHolder");
     if (knifeHolder == null) return;
 
-    foreach (float angle in config.stuckKnifeAngles)
+    int stuckCount = Random.Range(config.minStuckKnives, config.maxStuckKnives + 1);
+    for (int i = 0; i < stuckCount; i++)
     {
+      float angle = config.stuckKnifeAngles[Random.Range(0, config.stuckKnifeAngles.Length)];
       float rad = angle * Mathf.Deg2Rad;
 
       Vector3 positionOnCircle = new Vector3(
@@ -156,8 +150,25 @@ public class GameController : MonoBehaviour
 
   void SpawnApples(LevelConfig config)
   {
-    if (targetTransform == null) return;
+    if (currentTarget == null) return;
+    if (config.appleAngles == null || config.appleAngles.Length == 0) return;
+
     int appleCount = Random.Range(config.minApples, config.maxApples + 1);
+    for (int i = 0; i < appleCount; i++)
+    {
+      float angle = config.appleAngles[Random.Range(0, config.appleAngles.Length)];
+      float rad = angle * Mathf.Deg2Rad;
+
+      Vector3 positionOnCircle = new Vector3(
+        Mathf.Cos(rad) * logRadius,
+        Mathf.Sin(rad) * logRadius,
+        0.0f
+      );
+
+      // TODO: Instantiate apple prefab at positionOnCircle on target
+      // For now just logging
+      Debug.Log($"[GameController] Would spawn apple at angle {angle}, position {positionOnCircle}");
+    }
   }
 
   void SpawnKnife()

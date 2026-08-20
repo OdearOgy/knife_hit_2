@@ -29,12 +29,14 @@ public class TargetBreakController : MonoBehaviour
       if (logSprite != null)
         intactSprite = logSprite.GetComponent<SpriteRenderer>();
     }
-
-    CacheFragments();
   }
 
   private void CacheFragments()
   {
+    fragmentObjects.Clear();
+    fragmentRenderers.Clear();
+    fragmentBodies.Clear();
+
     GameObject[] tagged = GameObject.FindGameObjectsWithTag("LogMaterial");
     foreach (GameObject go in tagged)
     {
@@ -50,19 +52,16 @@ public class TargetBreakController : MonoBehaviour
         Rigidbody2D rb = child.GetComponent<Rigidbody2D>();
         if (rb == null) rb = child.gameObject.AddComponent<Rigidbody2D>();
 
-        if (child.GetComponent<Collider2D>() == null && rb != null)
+        rb.bodyType = RigidbodyType2D.Dynamic;
+        rb.simulated = true;
+
+        if (child.GetComponent<Collider2D>() == null)
           child.gameObject.AddComponent<BoxCollider2D>();
 
         if (sr != null)
           fragmentRenderers.Add(sr);
 
-        if (rb != null)
-        {
-          rb.gravityScale = 0f;
-          rb.isKinematic = true;
-          fragmentBodies.Add(rb);
-        }
-
+        fragmentBodies.Add(rb);
         fragmentObjects.Add(child.gameObject);
       }
     }
@@ -73,6 +72,7 @@ public class TargetBreakController : MonoBehaviour
     if (hasBroken) return;
     hasBroken = true;
 
+    CacheFragments();
     StartCoroutine(BreakRoutine());
   }
 
@@ -88,6 +88,8 @@ public class TargetBreakController : MonoBehaviour
     Transform flashOverlay = transform.Find("FlashOverlay");
     if (flashOverlay != null)
       flashOverlay.gameObject.SetActive(false);
+
+    yield return null;
 
     // Unparent each fragment so it stops rotating with the target
     foreach (GameObject go in fragmentObjects)

@@ -3,11 +3,11 @@ using System.Collections;
 
 public class TargetController : MonoBehaviour
 {
-  [SerializeField] private float rotationSpeed = 50f;
-  [SerializeField] private bool isClockwise = true;
+  private float rotationSpeed = 50f;
+  private bool isClockwise = true;
 
 
-  private float currentSpeed = 0f;
+  private float currentSpeed = 20f;
   private float targetSpeed;
   private float directionMultiplier => isClockwise ? -1f : 1f;
 
@@ -30,11 +30,11 @@ public class TargetController : MonoBehaviour
   {
     originalScale = transform.localScale;
     transform.localScale = Vector3.zero;
-    basePosition = transform.position;
   }
 
   void Start()
   {
+    basePosition = transform.localPosition;
     var config = LevelManager.Instance?.CurrentLevel;
     if (config != null)
     {
