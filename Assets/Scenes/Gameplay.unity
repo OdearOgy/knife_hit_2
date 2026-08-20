@@ -439,7 +439,7 @@ MonoBehaviour:
   knifeCountUI: {fileID: 757211336}
   scoreText: {fileID: 244363824}
   stageText: {fileID: 1984562849}
-  logRadius: 0.76
+  logRadius: 0.65
 --- !u!1 &499259569
 GameObject:
   m_ObjectHideFlags: 0
