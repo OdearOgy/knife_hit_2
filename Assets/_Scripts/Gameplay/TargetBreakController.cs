@@ -109,6 +109,12 @@ public class TargetBreakController : MonoBehaviour
     Transform bossParticles = transform.Find("BossSprite/BossParticles");
     if (bossParticles != null)
     {
+      Vector3 worldPos = bossParticles.position;
+      Quaternion worldRot = bossParticles.rotation;
+      bossParticles.SetParent(null);
+      bossParticles.position = worldPos;
+      bossParticles.rotation = worldRot;
+
       bossParticles.gameObject.SetActive(true);
       ParticleSystem ps = bossParticles.GetComponent<ParticleSystem>();
       if (ps != null) ps.Play();
@@ -124,7 +130,9 @@ public class TargetBreakController : MonoBehaviour
 
     List<Transform> stuckKnives = new List<Transform>();
     foreach (Transform child in knifeHolder)
+    {
       stuckKnives.Add(child);
+    }
 
     foreach (var knife in stuckKnives)
     {
@@ -163,8 +171,7 @@ public class TargetBreakController : MonoBehaviour
 
     // Hide flash overlay too
     Transform flashOverlay = transform.Find("FlashOverlay");
-    if (flashOverlay != null)
-      flashOverlay.gameObject.SetActive(false);
+    flashOverlay?.gameObject.SetActive(false);
 
     yield return null;
 
