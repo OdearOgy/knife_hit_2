@@ -11,6 +11,7 @@ TagManager:
   - RestartButton
   - HomeButton
   - LogMaterial
+  - BossMaterial
   layers:
   - Default
   - TransparentFX

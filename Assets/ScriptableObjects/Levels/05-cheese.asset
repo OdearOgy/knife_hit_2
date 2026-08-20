@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af5215c61e7b745089a3b0c0fa079b4f, type: 3}
-  m_Name: 03
+  m_Name: 05-cheese
   m_EditorClassIdentifier: Assembly-CSharp::LevelConfig
-  levelNumber: 3
-  targetPrefab: {fileID: 315066947354790161, guid: b351603a78f194c96a27691e3c9ba8fc, type: 3}
-  knivesToThrow: 10
+  levelNumber: 5
+  targetPrefab: {fileID: 2219989765700856283, guid: b0c3fe2e453c6498bab693c002048d87, type: 3}
+  knivesToThrow: 4
   minStuckKnives: 0
   maxStuckKnives: 3
   stuckKnifeAngles:
@@ -22,15 +22,10 @@ MonoBehaviour:
   - 20
   - 40
   - 60
-  - 80
   minApples: 0
-  maxApples: 2
-  appleAngles:
-  - 180
-  - 200
-  - 220
-  - 240
-  rotationSpeed: 145
+  maxApples: 0
+  appleAngles: []
+  rotationSpeed: 200
   clockwise: 1
   changesDirection: 0
   directionChangeInterval: 0

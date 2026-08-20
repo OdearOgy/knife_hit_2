@@ -3,6 +3,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "LevelConfig", menuName = "Knife Hit/Level Config")]
 public class LevelConfig : ScriptableObject
 {
+    [Header("Identity")]
+    public int levelNumber;
+
     [Header("Target")]
     public TargetController targetPrefab;
 

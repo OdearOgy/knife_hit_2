@@ -13,14 +13,17 @@ MonoBehaviour:
   m_Name: 04
   m_EditorClassIdentifier: Assembly-CSharp::LevelConfig
   levelNumber: 4
-  levelName: Oak
-  knivesToThrow: 10
+  targetPrefab: {fileID: 4427623744164345649, guid: 237f7c7b353bb410996fd98378f15e39, type: 3}
+  knivesToThrow: 8
+  minStuckKnives: 0
+  maxStuckKnives: 3
   stuckKnifeAngles:
   - 90
   - 270
   minApples: 0
   maxApples: 4
+  appleAngles: []
   rotationSpeed: 155
   clockwise: 0
   changesDirection: 1
-  targetSprite: {fileID: 0}
+  directionChangeInterval: 0

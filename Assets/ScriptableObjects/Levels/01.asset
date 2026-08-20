@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af5215c61e7b745089a3b0c0fa079b4f, type: 3}
   m_Name: 01
   m_EditorClassIdentifier: Assembly-CSharp::LevelConfig
+  levelNumber: 1
   targetPrefab: {fileID: 2548193915051261460, guid: 186b04c6e2eb147f7a2b3316f62ed651, type: 3}
   knivesToThrow: 7
   minStuckKnives: 0
