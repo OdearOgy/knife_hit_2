@@ -25,8 +25,10 @@ public class InputManager : MonoBehaviour
     }
 
     private void OnDisable() {
-      input.GameplayActions.Tap.performed -= HandleTap;
-      input.Disable();
+      if (input != null) {
+        input.GameplayActions.Tap.performed -= HandleTap;
+        input.Disable();
+      }
     }
 
     private void HandleTap(InputAction.CallbackContext ctx) {
