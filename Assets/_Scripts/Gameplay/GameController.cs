@@ -6,7 +6,7 @@ using TMPro;
 public class GameController : MonoBehaviour
 {
   [SerializeField] private float slideInSpeed = 80f;
-  [SerializeField] private float knifeSpawnOffset = 1f;
+  [SerializeField] private float knifeSpawnOffset = 8f;
   [SerializeField] private float targetSpawnOffset = 1f;
 
   [SerializeField] private PlayerConfig playerConfig;
@@ -192,11 +192,17 @@ public class GameController : MonoBehaviour
 
   void SpawnKnife()
   {
-    Vector3 initialSpawnPoint = spawnPoint.localPosition - Vector3.up * knifeSpawnOffset;
-    currentKnife = Instantiate(KnifePrefab, initialSpawnPoint, Quaternion.identity);
+    Camera mainCamera = Camera.main;
+    float screenHeight = mainCamera.orthographicSize * 2f;
+    float screenBottom = mainCamera.transform.position.y - screenHeight / 2f;
+
+    Vector3 spawnTargetWorld = spawnPoint.position;
+    Vector3 initialSpawnPointWorld = new Vector3(spawnTargetWorld.x, screenBottom - 2f, spawnTargetWorld.z);
+
+    currentKnife = Instantiate(KnifePrefab, initialSpawnPointWorld, Quaternion.identity);
     currentKnife.SetController(this);
 
-    currentKnife.Prepare(spawnPoint.localPosition, slideInSpeed);
+    currentKnife.Prepare(spawnTargetWorld, slideInSpeed);
   }
 
   void ThrowKnife()

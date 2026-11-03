@@ -28,8 +28,13 @@ public class Knife : MonoBehaviour
   private float originalColliderOffsetY;
   private float originalColliderRadius;
 
+  private SpriteRenderer spriteRenderer;
+  private Vector3 startPosition;
+
   void Awake()
   {
+    spriteRenderer = GetComponent<SpriteRenderer>();
+
     ParticleSystem ps = GetComponentInChildren<ParticleSystem>();
     if (ps != null)
     {
@@ -63,6 +68,13 @@ public class Knife : MonoBehaviour
         {
           GetComponent<Collider2D>().enabled = true;
 
+          if (spriteRenderer != null)
+          {
+            Color color = spriteRenderer.color;
+            color.a = 1f;
+            spriteRenderer.color = color;
+          }
+
           if (State == KnifeState.Queued)
           {
             State = KnifeState.Thrown;
@@ -72,6 +84,19 @@ public class Knife : MonoBehaviour
             State = KnifeState.Prepared;
           }
 
+        }
+        else
+        {
+          float totalDistance = Vector3.Distance(startPosition, slideTarget);
+          float currentDistance = Vector3.Distance(transform.position, slideTarget);
+          float progress = 1f - (currentDistance / totalDistance);
+
+          if (spriteRenderer != null)
+          {
+            Color color = spriteRenderer.color;
+            color.a = Mathf.Clamp01(progress);
+            spriteRenderer.color = color;
+          }
         }
         break;
 
@@ -115,8 +140,16 @@ public class Knife : MonoBehaviour
   {
     slideTarget = target;
     slideSpeed = speed;
+    startPosition = transform.position;
     GetComponent<Collider2D>().enabled = false;
     ResetColliderToFull();
+
+    if (spriteRenderer != null)
+    {
+      Color color = spriteRenderer.color;
+      color.a = 0f;
+      spriteRenderer.color = color;
+    }
   }
 
   public void Throw()
